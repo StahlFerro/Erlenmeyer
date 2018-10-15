@@ -3,10 +3,11 @@ from random import choices
 from pprint import pprint
 from server import app
 from flask import render_template
+from flask import jsonify
 
 
 def get_data():
-    count = 100
+    count = 10
     charlength = 20
     numlength = 25
     data = [{
@@ -24,3 +25,8 @@ def index():
     app_usefulness = 'shit'
     data = get_data()
     return render_template('index.html', title='Erlenmeyer', user=user, data=data, app_usefulness=app_usefulness)
+
+
+@app.route('/json')
+def json():
+    return jsonify(get_data())
