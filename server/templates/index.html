@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+    <div class="content">
+        <h1>Hello, {{ user.name }}</h1>
+        <p>This is a {{ app_usefulness }} app for testing purposes only</p>
+        <table class="table" border="1px solid black">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for d in data %}
+            <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.name }}</td>
+                <td>{{ d.number }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
