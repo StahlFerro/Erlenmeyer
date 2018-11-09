@@ -2,8 +2,8 @@ import string
 from random import choices
 from pprint import pprint
 from server import app
-from flask import render_template
-from flask import jsonify
+from flask import render_template, redirect, jsonify, flash
+from server.forms import LoginForm
 
 
 def get_data():
@@ -30,3 +30,13 @@ def index():
 @app.route('/json')
 def json():
     return jsonify(get_data())
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash(f'Login requested for user {form.username.data}, remember_me={form.remember_me.data}')
+        print(f'Login requested for user {form.username.data}, remember_me={form.remember_me.data}')
+        return redirect('/index')
+    return render_template('login.html', title='Login', form=form)

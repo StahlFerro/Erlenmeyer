@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero is-fullheight is-medium">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <article class="card has-background-light">
+                    <div class="card-content">
+                        <form method="post" action="" novalidate>
+                            {{ form.hidden_tag() }}
+                            <h1 class="title has-text-centered">Login</h1>
+                            <div class="field">
+                                {{ form.username.label(class_="label") }}
+                                <div class="control">{{ form.username(class="input is-info", size=32) }}</div>
+                                {% if form.username.errors %}
+                                    <p class="help is-danger">{{'\n'.join(form.username.errors) }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="field">
+                                {{ form.password.label(class_="label") }}
+                                <div class="control">{{ form.password(class="input", size=32) }}</div>
+                                {% if form.password.errors %}
+                                    <p class="help is-danger">{{'\n'.join(form.password.errors) }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="field">
+                                {{ form.remember_me(class="checkbox") }}
+                                {{ form.remember_me.label }}
+                            </div>
+                            <div class="field has-text-centered">
+                                {{ form.submit(class="button is-info") }}
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
