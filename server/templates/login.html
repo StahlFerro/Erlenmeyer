@@ -29,7 +29,30 @@
                                 {{ form.remember_me.label }}
                             </div>
                             <div class="field has-text-centered">
-                                {{ form.submit(class="button is-info") }}
+                                <nav class="level">
+                                    <nav class="level-item has-text-centered">
+                                        <button class="button" type="reset" value="Reset">Reset</button>
+                                    </nav>
+                                    <nav class="level-item has-text-centered">
+                                        {{ form.submit(class="button is-primary") }}
+                                    </nav>
+                                    <nav class="level-item has-text-centered">
+                                        <a class="button has-text-primary" href="{{ url_for('index') }}">Home</a>
+                                    </nav>
+                                </nav>
+
+
+                            </div>
+                            <div class="has-text-centered">
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                <ul>
+                                    {% for message in messages %}
+                                    <li><p class="help is-danger">{{ message }}</p></li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                {% endwith %}
                             </div>
                         </form>
                     </div>

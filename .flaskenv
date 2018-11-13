@@ -1,2 +1,2 @@
-FLASK_APP=server.py
+FLASK_APP=imvr.py
 FLASK_DEBUG=1

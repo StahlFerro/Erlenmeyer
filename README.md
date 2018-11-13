@@ -1,3 +1,3 @@
-# Erlenmeyer
+# IMVR
 
-A Flask app for personal testing purposes. Nothing else
+The IMVR (International Marine Vessel Registry) is only a Flask test app despite it's cool name.
