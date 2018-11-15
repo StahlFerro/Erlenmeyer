@@ -27,59 +27,42 @@ def get_data(id: int = None):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    print('index called')
+    username = ''
+    is_login = current_user.is_authenticated
+    if is_login:
+        username = current_user.username
+    return render_template('index.html', username=username, is_login=is_login)
+
+
+@app.route('/index/ships', methods=['GET', 'POST'])
+def ships():
+    return render_template('ships.html')
+
+
+@app.route('/gate', methods=['GET', 'POST'])
+def login():
+    print('gate called')
     if current_user.is_authenticated:
-        return redirect(url_for('registry'))
+        return redirect(url_for('login'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         print(f'Login user {user}')
         if user is None or not user.check_password(form.password.data): # If user does not exist or has wrong username and pass
             flash('Invalid username or password')
-            return redirect(url_for('index'))
+            return redirect(url_for('login'))
         else:  # If user exist and has the correct username and pass
             login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
             if not next_page or url_parse(next_page).netloc != '':
-                next_page = url_for('registry')
+                next_page = url_for('index')
             print(f'next page: {next_page}')
             return redirect(next_page)
-    return render_template('index.html', title='Login', form=form)
+    return render_template('gate.html', title='Login', form=form)
 
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
-
-@app.route('/registry')
-@login_required
-def registry():
-    username = current_user.username
-    is_login = current_user.is_authenticated
-    data = get_data()
-    return render_template('registry.html', title='IMVR', username=username, data=data, is_login=is_login)
-
-
-@app.route('/registry/<int:rowid>')
-@login_required
-def registrysingle(rowid=None):
-    username = current_user.username
-    is_login = current_user.is_authenticated
-    data = get_data(rowid)
-    return render_template('registry.html', title='IMVR', username=username, data=data, is_login=is_login)
-
-
-@app.route('/registry/json', methods=['GET'])
-@login_required
-def json():
-    return jsonify(get_data())
-
-
-@app.route('/registry/json/<int:rowid>', methods=['GET'])
-@login_required
-def jsonsingle(rowid=None):
-    record = [data for data in get_data() if data['id'] == rowid]
-    if len(record) == 0:
-        abort(404)
-    return jsonify(record)

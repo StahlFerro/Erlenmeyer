@@ -1,0 +1,66 @@
+<section class="hero is-small has-background-dark">
+
+    <div class="hero-head">
+        <div class="container">
+            <nav class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                    </div>
+                </div>
+
+                <div class="level-right">
+                    <div class="level-item has-text-centered">
+                        <div class="content">
+                            <h3>
+                                {% if username %}
+                                <span class='has-text-white'>Logged in as</span>
+                                <span class='has-text-primary'>{{ username }}</span>
+                                {% else %}
+                                <span class="has-text-white">Viewing page as guest</span>
+                                {% endif %}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="content">
+                <p><h1 class="title is-1 has-text-white">IMVR</h1></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-footer">
+        <div class="container has-background-light">
+            <nav class="level">
+
+                <div class="level-item">
+                    <a class="button is-info" href="../../index.php">Website</a>
+                </div>
+
+                <div class="level-item">
+                    <div class="tabs is-fullwidth is-large">
+                        <ul>
+                            <li><a href="?panel=pages">Pages</a></li>
+                            <li><a href="?panel=contents">Contents</a></li>
+                            <li><a href="?panel=gallery">Gallery</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="level-item">
+                    {% if is_login %}
+                    <a class="button is-danger" href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                    <a class="button is-primary" href="{{ url_for('login') }}">Login</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </div>
+    <br/>
+</section>

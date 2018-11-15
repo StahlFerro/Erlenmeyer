@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+    <div class="content">
+        <h1 class="is-size-1 has-text-centered">Hello {{ username }}</h1>
+        <nav class="level is-mobile">
+            <!--<div class="level-left">-->
+                <!--<div class="level-item has-text-centered">-->
+                    <!--<h1>Hello {{ username }}</h1>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="level-item has-text-centered">
+                <a class="button" href="{{ url_for('index') }}">Home</a>
+            </div>
+        </nav>
+        <p>This is a {{ is_login }} app for testing purposes only</p>
+        <table class="table" border="1px solid black">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for d in data %}
+            <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.name }}</td>
+                <td>{{ d.number }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

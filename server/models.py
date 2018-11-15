@@ -25,11 +25,14 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
-# class Ship(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(40), index=True)
-#     top_speed = db.Column(db.Float)
-#
-#     def __repr__(self):
-#         return f"<Ship {self.name}>"
+
+class Ship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), index=True)
+    code = db.Column(db.String(5), index=True)
+    speed = db.Column(db.Float)
+    launch_date = db.Date()
+
+    def __repr__(self):
+        return f"<Ship {self.name}>"
 
