@@ -31,7 +31,7 @@ class Ship(db.Model):
     name = db.Column(db.String(40), index=True)
     code = db.Column(db.String(5), index=True)
     speed = db.Column(db.Float)
-    launch_date = db.Date()
+    launch_date = db.Column(db.Date)
 
     def __repr__(self):
         return f"<Ship {self.name}>"
