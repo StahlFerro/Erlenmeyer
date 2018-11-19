@@ -10,27 +10,27 @@
                 <!--</div>-->
             <!--</div>-->
 
-            {% if is_login %}
             <div class="level-item has-text-centered">
-                <a class="button is-danger" href="{{ url_for('logout') }}">Logout</a>
+                <a class="button" href="{{ url_for('index') }}">Home</a>
             </div>
-            {% endif %}
         </nav>
         <p>This is a {{ is_login }} app for testing purposes only</p>
         <table class="table" border="1px solid black">
             <thead>
             <tr>
                 <th>No</th>
-                <th>Name</th>
-                <th>Number</th>
+                {% for ch in cap_headers %}
+                <th>{{ ch }}</th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
             {% for d in data %}
             <tr>
-                <td>{{ d.id }}</td>
-                <td>{{ d.name }}</td>
-                <td>{{ d.number }}</td>
+                <td>{{ d['index'] }}</td>
+                {% for h in headers %}
+                <td>{{ d[h] }}</td>
+                {% endfor %}
             </tr>
             {% endfor %}
             </tbody>

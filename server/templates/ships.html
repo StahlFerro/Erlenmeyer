@@ -18,17 +18,18 @@
         <table class="table" border="1px solid black">
             <thead>
             <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Number</th>
+                {% for h in ship_cols %}
+                <th>{{ h }}</th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
-            {% for d in data %}
+            {% for s in ship_data %}
             <tr>
-                <td>{{ d.id }}</td>
-                <td>{{ d.name }}</td>
-                <td>{{ d.number }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.code }}</td>
+                <td>{{ s.speed }}</td>
+                <td>{{ s.launch_date }}</td>
             </tr>
             {% endfor %}
             </tbody>

@@ -1,12 +1,17 @@
 import string
-from random import choices
+from random import choices, randint
 from pprint import pprint
-from server import app
+
+from sqlalchemy.dialects.mssql.information_schema import columns
+
+from server import app, db, session
+from server.models import Ship
 from flask import request, render_template, redirect, jsonify, flash, url_for, abort
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
 from server.forms import LoginForm
-from server.models import User
+from server.models import User, capitalize_headers, get_cols, get_json_data
+import json
 
 
 def get_data(id: int = None):
@@ -15,8 +20,10 @@ def get_data(id: int = None):
     numlength = 25
     data = [{
         'id': x,
-        'name': "".join(choices(string.ascii_letters, k=charlength)),
-        'number': "".join(choices(string.digits, k=numlength))
+        'Name': "".join(choices(string.ascii_letters, k=charlength)),
+        'Code': "".join(choices(string.digits, k=numlength)),
+        'Speed': randint(0, 10),
+        # 'Launch date': f"{randint(1900, 2018)}-{randint(1,12)}-{randint(1-31)}"
     } for x in range(0, count)]
     if not id:
         return data
@@ -37,7 +44,10 @@ def index():
 
 @app.route('/index/ships', methods=['GET', 'POST'])
 def ships():
-    return render_template('ships.html')
+    ship_cols = get_cols(Ship)
+    cap_headers = capitalize_headers(ship_cols)
+    ship_data = get_json_data(model=Ship, columns=ship_cols)
+    return render_template('registry.html', data=ship_data, headers=ship_cols, cap_headers=cap_headers, index=1)
 
 
 @app.route('/gate', methods=['GET', 'POST'])
