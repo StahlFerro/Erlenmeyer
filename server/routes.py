@@ -10,7 +10,7 @@ from flask import request, render_template, redirect, jsonify, flash, url_for, a
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
 from server.forms import LoginForm
-from server.models import User, capitalize_headers, get_cols, get_json_data
+from server.models import User, format_headers, get_cols, get_json_data
 import json
 
 
@@ -45,7 +45,7 @@ def index():
 @app.route('/index/ships', methods=['GET', 'POST'])
 def ships():
     ship_cols = get_cols(Ship)
-    cap_headers = capitalize_headers(ship_cols)
+    cap_headers = format_headers(ship_cols)
     ship_data = get_json_data(model=Ship, columns=ship_cols)
     return render_template('registry.html', data=ship_data, headers=ship_cols, cap_headers=cap_headers, index=1)
 
