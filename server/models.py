@@ -37,6 +37,7 @@ class Ship(db.Model):
     capacity = db.Column(db.Integer)
     launch_date = db.Column(db.Date)
     engine_id = db.Column(db.Integer, db.ForeignKey('engine.id'))
+    builder_id = db.Column(db.Integer, db.ForeignKey('builder.id'))
 
     def __repr__(self):
         return f"<Ship [{self.code}] {self.name}>"
@@ -52,6 +53,19 @@ class Engine(db.Model):
 
     def __repr__(self):
         return f"<Engine [{self.code}] {self.name}>"
+
+
+class Builder(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), index=True)
+    code = db.Column(db.String(5), index=True)
+    date_founded = db.Column(db.Date)
+    founder = db.Column(db.String(40))
+    headquarters = db.Column(db.String(40))
+    ship_ids = db.relationship('Ship', backref='builder', lazy='dynamic')
+
+    def __repr__(self):
+        return f"<Builder [{self.code}] {self.name}>"
 
 
 def get_columns(model=None):

@@ -5,7 +5,7 @@ from pprint import pprint
 from sqlalchemy.dialects.mssql.information_schema import columns
 
 from server import app, db, session
-from server.models import Ship, Engine
+from server.models import Ship, Engine, Builder
 from flask import request, render_template, redirect, jsonify, flash, url_for, abort
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
@@ -61,6 +61,15 @@ def engines(engine_id: int=None):
     cap_headers = format_headers(engine_cols)
     engine_data = get_json_data(model=Engine, columns=engine_cols, id=engine_id)
     return render_template('registry.html', title='Engines', headers=engine_cols, data=engine_data,
+                           cap_headers=cap_headers, index=1)
+
+@app.route('/index/builders', methods=['GET', 'POST'])
+@app.route('/index/builders/<int:builder_id>', methods=['GET', 'POST'])
+def builders(builder_id: int=None):
+    builder_cols = get_columns(Builder)
+    cap_headers = format_headers(builder_cols)
+    builder_data = get_json_data(model=Builder, columns=builder_cols, id=builder_id)
+    return render_template('registry.html', title='Engines', headers=builder_cols, data=builder_data,
                            cap_headers=cap_headers, index=1)
 
 
