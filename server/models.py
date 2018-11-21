@@ -1,8 +1,8 @@
 from server import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from flask_sqlalchemy import inspect, orm
-from flask_sqlalchemy import DeclarativeMeta
+from flask_sqlalchemy import inspect, orm, DeclarativeMeta, DefaultMeta
+from sqlalchemy.orm.properties import ColumnProperty, RelationshipProperty
 from datetime import date, datetime
 from pprint import pprint
 import json
@@ -16,8 +16,6 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f"<User {self.username}>"
 
-    def hash_password(self, password: str):
-        return generate_password_hash(password)
 
     def set_password(self, password: str):
         self.password_hash = generate_password_hash(password)
@@ -50,51 +48,73 @@ class Engine(db.Model):
     code = db.Column(db.String(5), index=True)
     power_output = db.Column(db.Float)
     type = db.Column(db.String(60))
-    ships = db.relationship('Ship', backref='engine', lazy='dynamic')
+    ship_ids = db.relationship('Ship', backref='engine', lazy='dynamic')
 
     def __repr__(self):
         return f"<Engine [{self.code}] {self.name}>"
 
 
-def get_cols(model=None):
+def get_columns(model=None):
     mapper: orm.mapper = inspect(model)
-    print('mapper attrs', mapper.attrs)
-    print('model query', model.query.column_descriptions)
-    column_names = [col.key for col in mapper.columns]
-    column_names.remove('id')
-    return column_names
+    columns = [col.key for col in mapper.attrs if ('_id' not in col.key and '_ids' not in col.key)]
+    columns.remove('id')
+    print('columns', columns)
+    return columns
+
+def get_cols_dual(model=None):
+    mapper: orm.mapper = inspect(model)
+    # print('mapper columns', [c.key for c in mapper.columns])
+    # print('mapper attrs', [x.key for x in mapper.attrs])   # _ids removed (one2many fields)
+    # column_names = [col.key for col in mapper.columns]
+    # column_names = [col.key for col in mapper.attrs if ('_id' not in col.key and '_ids' not in col.key)]
+    # column_names = [col.key for col in mapper.attrs if '_ids' not in col.key]
+    columns = [col for col in mapper.attrs if (col.key != 'id' and '_ids' not in col.key)]
+    print('allcol', [col for col in mapper.attrs])
+    normal_cols = [nc.key for nc in columns if '_id' not in nc.key and type(nc) is ColumnProperty]
+    relation_cols = [rc.key for rc in columns if type(rc) is RelationshipProperty]
+    print('n and c cols', normal_cols, relation_cols)
+    return normal_cols, relation_cols
+    # column_names.remove('id')  # Get rid of id column
+    # print('final column names', column_names)
+    # return column_names
 
 
-def get_json_data(model=None, columns=None):
-    if not columns:
-        columns = get_cols(model)
-    ships = model.query.all()
-    # print('ships', ships)
+def get_json_data(model=None, columns=None, id=None):
+    if id:
+        records = [model.query.get(id)]
+    else:
+        records = model.query.all()
     out_json = []
     index = 1
-    for ship in ships:
-        cols = [f for f in dir(ship) if f in columns]
-        record = {}
+    for record in records:
+        cols = [f for f in dir(record) if f in columns]
+        data = {}
         for col in cols:
-            val = ship.__getattribute__(col)
-            # print('raw val', val)
+            # print(cols)
+            val = record.__getattribute__(col)
+            print(type(type(val)))
             try:
                 json.dumps(val)
-                record[col] = val
+                data[col] = val
             except TypeError:
-                if type(val) is date:
+                if type(val) is date:  # is a date obj
                     val: date = val.strftime('%Y-%m-%d')
-                    record[col] = val
-                elif type(val) is datetime:
+                    data[col] = val
+                elif type(val) is datetime:  # is a datetime obj
                     val: datetime = val.strftime('%Y-%m-%d %H:%M:%S')
-                    record[col] = val
+                    data[col] = val
+                elif type(type(val)) is DefaultMeta:
+                    data[col] = [val.name, f"/index/{col}s/{val.id}"]
                 else:
-                    record[col] = ''
-        record['index'] = index
+                    data[col] = ''
+        data['index'] = index
         index += 1
-        out_json.append(record)
+        out_json.append(data)
+    pprint('all json')
     pprint(out_json)
     return out_json
+
+
 
 
 def format_headers(headers: list = None):
@@ -106,6 +126,7 @@ def format_headers(headers: list = None):
     new_headers = []
     if not headers:
         return new_headers
+    print('new headers', headers)
     for h in headers:
         h: str = h
         if '_' in h:
@@ -114,6 +135,8 @@ def format_headers(headers: list = None):
             h = h.replace('id', '')
         h = h.strip()
         h = h.capitalize()
+        if h == 'Power output':
+            h = 'Power output (kW)'
         new_headers.append(h)
     return new_headers
 

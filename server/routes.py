@@ -5,12 +5,12 @@ from pprint import pprint
 from sqlalchemy.dialects.mssql.information_schema import columns
 
 from server import app, db, session
-from server.models import Ship
+from server.models import Ship, Engine
 from flask import request, render_template, redirect, jsonify, flash, url_for, abort
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
 from server.forms import LoginForm
-from server.models import User, format_headers, get_cols, get_json_data
+from server.models import User, format_headers, get_columns, get_json_data
 import json
 
 
@@ -43,11 +43,25 @@ def index():
 
 
 @app.route('/index/ships', methods=['GET', 'POST'])
-def ships():
-    ship_cols = get_cols(Ship)
+@app.route('/index/ships/<int:ship_id>')
+def ships(ship_id: int=None):
+    print('ships called with id:', ship_id or 'none')
+    ship_cols = get_columns(Ship)
     cap_headers = format_headers(ship_cols)
-    ship_data = get_json_data(model=Ship, columns=ship_cols)
-    return render_template('registry.html', data=ship_data, headers=ship_cols, cap_headers=cap_headers, index=1)
+    ship_data = get_json_data(model=Ship, columns=ship_cols, id=ship_id)
+    print('ship data', ship_data)
+    return render_template('registry.html', title='Ships', headers=ship_cols, data=ship_data,
+                           cap_headers=cap_headers, index=1)
+
+
+@app.route('/index/engines', methods=['GET', 'POST'])
+@app.route('/index/engines/<int:engine_id>', methods=['GET', 'POST'])
+def engines(engine_id: int=None):
+    engine_cols = get_columns(Engine)
+    cap_headers = format_headers(engine_cols)
+    engine_data = get_json_data(model=Engine, columns=engine_cols, id=engine_id)
+    return render_template('registry.html', title='Engines', headers=engine_cols, data=engine_data,
+                           cap_headers=cap_headers, index=1)
 
 
 @app.route('/gate', methods=['GET', 'POST'])
