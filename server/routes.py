@@ -63,13 +63,14 @@ def engines(engine_id: int=None):
     return render_template('registry.html', title='Engines', headers=engine_cols, data=engine_data,
                            cap_headers=cap_headers, index=1)
 
+
 @app.route('/index/builders', methods=['GET', 'POST'])
 @app.route('/index/builders/<int:builder_id>', methods=['GET', 'POST'])
 def builders(builder_id: int=None):
     builder_cols = get_columns(Builder)
     cap_headers = format_headers(builder_cols)
     builder_data = get_json_data(model=Builder, columns=builder_cols, id=builder_id)
-    return render_template('registry.html', title='Engines', headers=builder_cols, data=builder_data,
+    return render_template('registry.html', title='Builders', headers=builder_cols, data=builder_data,
                            cap_headers=cap_headers, index=1)
 
 

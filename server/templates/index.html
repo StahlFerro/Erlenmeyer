@@ -65,11 +65,28 @@
 
                 <div class="column">
                     <article class="card has-background-light">
-                        <div class="card-content has-text-centered  ">
-                            <a href="https://google.com"
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://bulma.io/images/placeholders/1280x960.png"/>
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <a href="{{ url_for('engines') }}"
                                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
-                                <h1>Manufacturers</h1>
                             </a>
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="https://bulma.io/images/placeholders/96x96.png"/>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-3">Builders</p>
+                                    <p class="subtitle is-5">Creators of the marine vessels</p>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <p>See the information of these following shipbuilders who have manufactured the ships
+                                listed in the registry</p>
+                            </div>
                         </div>
                     </article>
                 </div>
