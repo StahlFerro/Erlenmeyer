@@ -5,7 +5,7 @@ from pprint import pprint
 from sqlalchemy.dialects.mssql.information_schema import columns
 
 from server import app, db, session
-from server.models import Ship, ShipType, Engine, Builder
+from server.models import Ship, ShipType, ShipStatus, Engine, Builder
 from flask import request, render_template, redirect, jsonify, flash, url_for, abort
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
@@ -42,9 +42,9 @@ def index():
     return render_template('index.html', username=username, is_login=is_login)
 
 
-@app.route('/index/ships', methods=['GET', 'POST'])
-@app.route('/index/ships/<int:ship_id>')
-def ships(ship_id: int=None):
+@app.route('/index/ship', methods=['GET', 'POST'])
+@app.route('/index/ship/<int:ship_id>')
+def ship(ship_id: int=None):
     print('ships called with id:', ship_id or 'none')
     ship_cols = get_columns(Ship)
     cap_headers = format_headers(ship_cols)
@@ -54,9 +54,9 @@ def ships(ship_id: int=None):
                            cap_headers=cap_headers, index=1)
 
 
-@app.route('/index/ship_types', methods=['GET', 'POST'])
-@app.route('/index/ship_types/<int:ship_type_id>')
-def ship_types(ship_type_id: int=None):
+@app.route('/index/ship_type', methods=['GET', 'POST'])
+@app.route('/index/ship_type/<int:ship_type_id>')
+def ship_type(ship_type_id: int=None):
     print('ship types called with id:', ship_type_id or 'none')
     stype_cols = get_columns(ShipType)
     cap_headers = format_headers(stype_cols)
@@ -66,9 +66,21 @@ def ship_types(ship_type_id: int=None):
                            cap_headers=cap_headers, index=1)
 
 
-@app.route('/index/engines', methods=['GET', 'POST'])
-@app.route('/index/engines/<int:engine_id>', methods=['GET', 'POST'])
-def engines(engine_id: int=None):
+@app.route('/index/ship_status', methods=['GET', 'POST'])
+@app.route('/index/ship_status/<int:ship_status_id>')
+def ship_status(ship_status_id: int=None):
+    print('ship types called with id:', ship_status_id or 'none')
+    stat_cols = get_columns(ShipStatus)
+    cap_headers = format_headers(stat_cols)
+    stat_data = get_json_data(model=ShipStatus, columns=stat_cols, id=ship_status_id)
+    print('ship type data', stat_data)
+    return render_template('registry.html', title='Ships', headers=stat_cols, data=stat_data,
+                           cap_headers=cap_headers, index=1)
+
+
+@app.route('/index/engine', methods=['GET', 'POST'])
+@app.route('/index/engine/<int:engine_id>', methods=['GET', 'POST'])
+def engine(engine_id: int=None):
     engine_cols = get_columns(Engine)
     cap_headers = format_headers(engine_cols)
     engine_data = get_json_data(model=Engine, columns=engine_cols, id=engine_id)
@@ -76,9 +88,9 @@ def engines(engine_id: int=None):
                            cap_headers=cap_headers, index=1)
 
 
-@app.route('/index/builders', methods=['GET', 'POST'])
-@app.route('/index/builders/<int:builder_id>', methods=['GET', 'POST'])
-def builders(builder_id: int=None):
+@app.route('/index/builder', methods=['GET', 'POST'])
+@app.route('/index/builder/<int:builder_id>', methods=['GET', 'POST'])
+def builder(builder_id: int=None):
     builder_cols = get_columns(Builder)
     cap_headers = format_headers(builder_cols)
     builder_data = get_json_data(model=Builder, columns=builder_cols, id=builder_id)

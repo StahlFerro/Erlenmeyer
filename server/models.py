@@ -37,6 +37,15 @@ class ShipType(db.Model):
         return f"<ShipType [{self.name}]>"
 
 
+class ShipStatus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), index=True)
+    ship_ids = db.relationship('Ship', backref='ship_status', lazy='dynamic')
+
+    def __repr__(self):
+        return f"<ShipStatus [{self.name}]>"
+
+
 class Ship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True)
@@ -47,6 +56,7 @@ class Ship(db.Model):
     ship_type_id = db.Column(db.Integer, db.ForeignKey('ship_type.id'))
     engine_id = db.Column(db.Integer, db.ForeignKey('engine.id'))
     builder_id = db.Column(db.Integer, db.ForeignKey('builder.id'))
+    ship_status_id = db.Column(db.Integer, db.ForeignKey('ship_status.id'))
 
     def __repr__(self):
         return f"<Ship [{self.code}] {self.name}>"
@@ -110,7 +120,11 @@ def get_json_data(model, columns, id=None):
                     val: datetime = val.strftime('%Y-%m-%d %H:%M:%S')
                     data[col] = val
                 elif type(type(val)) is DefaultMeta:  # is an sqlaclhemy obj
-                    data[col] = [val.name, f"/index/{col}s/{val.id}"]
+                    # if col[-1] in ('s', 'x'):
+                    #     route_url = f"{col}es"
+                    # else:
+                    #     route_url = f"{col}s"
+                    data[col] = [val.name, f"/index/{col}/{val.id}"]
                 else:
                     data[col] = ''
         data['index'] = index
@@ -143,5 +157,7 @@ def format_headers(headers: list = None):
             h = 'Power output (kW)'
         elif h == 'Ship type':
             h = 'Type'
+        elif h == 'Ship status':
+            h = 'Status'
         new_headers.append(h)
     return new_headers

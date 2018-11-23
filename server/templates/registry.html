@@ -11,16 +11,19 @@
             <!--</div>-->
 
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('ships') }}">Ships</a>
+                <a class="button" href="{{ url_for('ship') }}">Ships</a>
             </div>
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('ship_types') }}">Ship Types</a>
+                <a class="button" href="{{ url_for('ship_type') }}">Ship Types</a>
             </div>
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('engines') }}">Engines</a>
+                <a class="button" href="{{ url_for('ship_status') }}">Ship Statuses</a>
             </div>
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('builders') }}">Builders</a>
+                <a class="button" href="{{ url_for('engine') }}">Engines</a>
+            </div>
+            <div class="level-item has-text-centered">
+                <a class="button" href="{{ url_for('builder') }}">Builders</a>
             </div>
         </nav>
         <p>This is a {{ is_login }} app for testing purposes only</p>
