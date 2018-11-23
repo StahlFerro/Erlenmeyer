@@ -28,6 +28,15 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+class ShipType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), index=True)
+    ship_ids = db.relationship('Ship', backref='ship_type', lazy='dynamic')
+
+    def __repr__(self):
+        return f"<ShipType [{self.name}]>"
+
+
 class Ship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True)
@@ -35,6 +44,7 @@ class Ship(db.Model):
     speed = db.Column(db.Float)
     capacity = db.Column(db.Integer)
     launch_date = db.Column(db.Date)
+    ship_type_id = db.Column(db.Integer, db.ForeignKey('ship_type.id'))
     engine_id = db.Column(db.Integer, db.ForeignKey('engine.id'))
     builder_id = db.Column(db.Integer, db.ForeignKey('builder.id'))
 
@@ -131,5 +141,7 @@ def format_headers(headers: list = None):
         h = h.capitalize()
         if h == 'Power output':
             h = 'Power output (kW)'
+        elif h == 'Ship type':
+            h = 'Type'
         new_headers.append(h)
     return new_headers

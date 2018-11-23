@@ -5,7 +5,7 @@ from pprint import pprint
 from sqlalchemy.dialects.mssql.information_schema import columns
 
 from server import app, db, session
-from server.models import Ship, Engine, Builder
+from server.models import Ship, ShipType, Engine, Builder
 from flask import request, render_template, redirect, jsonify, flash, url_for, abort
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
@@ -51,6 +51,18 @@ def ships(ship_id: int=None):
     ship_data = get_json_data(model=Ship, columns=ship_cols, id=ship_id)
     print('ship data', ship_data)
     return render_template('registry.html', title='Ships', headers=ship_cols, data=ship_data,
+                           cap_headers=cap_headers, index=1)
+
+
+@app.route('/index/ship_types', methods=['GET', 'POST'])
+@app.route('/index/ship_types/<int:ship_type_id>')
+def ship_types(ship_type_id: int=None):
+    print('ship types called with id:', ship_type_id or 'none')
+    stype_cols = get_columns(ShipType)
+    cap_headers = format_headers(stype_cols)
+    stype_data = get_json_data(model=ShipType, columns=stype_cols, id=ship_type_id)
+    print('ship type data', stype_data)
+    return render_template('registry.html', title='Ships', headers=stype_cols, data=stype_data,
                            cap_headers=cap_headers, index=1)
 
 
