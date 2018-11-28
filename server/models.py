@@ -102,7 +102,7 @@ def get_api_columns(model):
     return columns
 
 
-def get_json_data(model, columns, id=None):
+def get_json_data(model, columns, id=None, web_api=False):
     if id:
         records = [model.query.get(id)]
     else:
@@ -134,7 +134,8 @@ def get_json_data(model, columns, id=None):
                     data[col] = [val.name, f"/index/{col}/{val.id}"]
                 else:
                     data[col] = ''
-        data['index'] = index
+        if not web_api:
+            data['index'] = index
         index += 1
         out_json.append(data)
     pprint('all json')
