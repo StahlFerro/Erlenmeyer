@@ -10,7 +10,7 @@ from flask import request, render_template, redirect, jsonify, flash, url_for, a
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
 from server.forms import LoginForm
-from server.models import User, format_headers, get_columns, get_json_data
+from server.models import User, format_headers, get_web_columns, get_json_data
 import json
 
 
@@ -46,7 +46,7 @@ def index():
 @app.route('/index/ship/<int:ship_id>')
 def ship(ship_id: int=None):
     print('ships called with id:', ship_id or 'none')
-    ship_cols = get_columns(Ship)
+    ship_cols = get_web_columns(Ship)
     cap_headers = format_headers(ship_cols)
     ship_data = get_json_data(model=Ship, columns=ship_cols, id=ship_id)
     print('ship data', ship_data)
@@ -58,7 +58,7 @@ def ship(ship_id: int=None):
 @app.route('/index/ship_type/<int:ship_type_id>')
 def ship_type(ship_type_id: int=None):
     print('ship types called with id:', ship_type_id or 'none')
-    stype_cols = get_columns(ShipType)
+    stype_cols = get_web_columns(ShipType)
     cap_headers = format_headers(stype_cols)
     stype_data = get_json_data(model=ShipType, columns=stype_cols, id=ship_type_id)
     print('ship type data', stype_data)
@@ -70,7 +70,7 @@ def ship_type(ship_type_id: int=None):
 @app.route('/index/ship_status/<int:ship_status_id>')
 def ship_status(ship_status_id: int=None):
     print('ship types called with id:', ship_status_id or 'none')
-    stat_cols = get_columns(ShipStatus)
+    stat_cols = get_web_columns(ShipStatus)
     cap_headers = format_headers(stat_cols)
     stat_data = get_json_data(model=ShipStatus, columns=stat_cols, id=ship_status_id)
     print('ship type data', stat_data)
@@ -81,7 +81,7 @@ def ship_status(ship_status_id: int=None):
 @app.route('/index/engine', methods=['GET', 'POST'])
 @app.route('/index/engine/<int:engine_id>', methods=['GET', 'POST'])
 def engine(engine_id: int=None):
-    engine_cols = get_columns(Engine)
+    engine_cols = get_web_columns(Engine)
     cap_headers = format_headers(engine_cols)
     engine_data = get_json_data(model=Engine, columns=engine_cols, id=engine_id)
     return render_template('registry.html', title='Engines', headers=engine_cols, data=engine_data,
@@ -91,7 +91,7 @@ def engine(engine_id: int=None):
 @app.route('/index/builder', methods=['GET', 'POST'])
 @app.route('/index/builder/<int:builder_id>', methods=['GET', 'POST'])
 def builder(builder_id: int=None):
-    builder_cols = get_columns(Builder)
+    builder_cols = get_web_columns(Builder)
     cap_headers = format_headers(builder_cols)
     builder_data = get_json_data(model=Builder, columns=builder_cols, id=builder_id)
     return render_template('registry.html', title='Builders', headers=builder_cols, data=builder_data,
@@ -124,3 +124,5 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+print(__name__)

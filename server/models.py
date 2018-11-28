@@ -87,10 +87,17 @@ class Builder(db.Model):
         return f"<Builder [{self.code}] {self.name}>"
 
 
-def get_columns(model):
+def get_web_columns(model):
     mapper: orm.mapper = inspect(model)
     columns = [col.key for col in mapper.attrs if ('_id' not in col.key and '_ids' not in col.key)]
     columns.remove('id')
+    print('columns', columns)
+    return columns
+
+
+def get_api_columns(model):
+    mapper: orm.mapper = inspect(model)
+    columns = [col.key for col in mapper.columns]
     print('columns', columns)
     return columns
 
@@ -161,3 +168,5 @@ def format_headers(headers: list = None):
             h = 'Status'
         new_headers.append(h)
     return new_headers
+
+print(__name__)

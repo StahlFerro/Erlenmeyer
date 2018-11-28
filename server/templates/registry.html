@@ -41,11 +41,13 @@
             <tr>
                 <td>{{ d['index'] }}</td>
                 {% for h in headers %}
-                {% if type(d[h]) is is_list %}
-                <td><a href="{{ d[h][1] }}">{{ d[h][0] }}</a></td>
-                {% else %}
-                <td>{{ d[h] }}</td>
-                {% endif %}
+                <td>
+                    {% if type(d[h]) is is_list %}
+                        <a href="{{ d[h][1] }}">{{ d[h][0] }}</a>
+                    {% else %}
+                        {{ d[h] }}
+                    {% endif %}
+                </td>
                 {% endfor %}
             </tr>
             {% endfor %}
