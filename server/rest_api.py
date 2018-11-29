@@ -1,6 +1,7 @@
-from server import app, api
+from pprint import pprint
+from server import app, api, db
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder, get_json_data, get_api_columns
-from flask_restful import Resource
+from flask_restful import Resource, reqparse, request
 
 
 class ShipListAPI(Resource):
@@ -12,11 +13,26 @@ class ShipListAPI(Resource):
 
 
 class ShipAPI(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        colntype = get_api_columns(Ship, include_type=True)
+        print(colntype)
+        for col in colntype:
+            self.parser.add_argument(col[0], type=col[1], location='json')
+        # self.parser.add_argument('name', type=str, required=True,
+        #                          help='No name specified', location='json')
+        # self.parser.add_argument('code', type=str, default="", location='json')
+        super(ShipAPI, self).__init__()
+
     def get(self, id):
         return get_json_data(Ship, get_api_columns(Ship), id, web_api=True)
 
     def put(self, id):
-        pass
+        data = dict(request.args)
+        print(data)
+        print('====================================')
+        args = self.parser.parse_args()
+        print(args)
 
     def delete(self, id):
         pass
@@ -98,14 +114,14 @@ class BuilderAPI(Resource):
         pass
 
 
-api.add_resource(ShipListAPI, '/api/ship', endpoint='shiplist_api')
-api.add_resource(ShipAPI, '/api/ship/<int:id>', endpoint='ship_api')
-api.add_resource(EngineListAPI, '/api/engine', endpoint='enginelist_api')
-api.add_resource(EngineAPI, '/api/engine/<int:id>', endpoint='engine_api')
-api.add_resource(BuilderListAPI, '/api/builder', endpoint='builderlist_api')
-api.add_resource(BuilderAPI, '/api/builder/<int:id>', endpoint='builder_api')
-api.add_resource(ShipTypeListAPI, '/api/ship_type', endpoint='ship_typelist_api')
-api.add_resource(ShipTypeAPI, '/api/ship_type/<int:id>', endpoint='ship_type_api')
-api.add_resource(ShipStatusListAPI, '/api/ship_status', endpoint='ship_statuslist_api')
-api.add_resource(ShipStatusAPI, '/api/ship_status/<int:id>', endpoint='ship_status_api')
+api.add_resource(ShipListAPI, '/api/ships', endpoint='shiplist_api')
+api.add_resource(ShipAPI, '/api/ships/<int:id>', endpoint='ship_api')
+api.add_resource(EngineListAPI, '/api/engines', endpoint='enginelist_api')
+api.add_resource(EngineAPI, '/api/engines/<int:id>', endpoint='engine_api')
+api.add_resource(BuilderListAPI, '/api/builders', endpoint='builderlist_api')
+api.add_resource(BuilderAPI, '/api/builders/<int:id>', endpoint='builder_api')
+api.add_resource(ShipTypeListAPI, '/api/ship_types', endpoint='ship_typelist_api')
+api.add_resource(ShipTypeAPI, '/api/ship_types/<int:id>', endpoint='ship_type_api')
+api.add_resource(ShipStatusListAPI, '/api/ship_statuses', endpoint='ship_statuslist_api')
+api.add_resource(ShipStatusAPI, '/api/ship_statuses/<int:id>', endpoint='ship_status_api')
 print(__name__)

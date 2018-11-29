@@ -1,3 +1,4 @@
+from pydoc import locate
 from server import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -95,11 +96,27 @@ def get_web_columns(model):
     return columns
 
 
-def get_api_columns(model):
-    mapper: orm.mapper = inspect(model)
-    columns = [col.key for col in mapper.columns]
+def get_api_columns(model, include_type=False):
+    mapper = inspect(model)
+    if include_type:
+        columns = [(col.key, get_type(type(col.type).__visit_name__)) for col in mapper.columns]
+    else:
+        columns = [col.key for col in mapper.columns]
     print('columns', columns)
     return columns
+
+
+def get_type(text: str):
+    if text == 'string':
+        return str
+    elif text == 'integer':
+        return int
+    elif text == 'date':
+        return date
+    elif text == 'datetime':
+        return datetime
+    else:
+        return locate(text)
 
 
 def get_json_data(model, columns, id=None, web_api=False):
@@ -169,5 +186,7 @@ def format_headers(headers: list = None):
             h = 'Status'
         new_headers.append(h)
     return new_headers
+
+
 
 print(__name__)
