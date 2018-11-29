@@ -18,10 +18,7 @@ class ShipAPI(Resource):
         colntype = get_api_columns(Ship, include_type=True)
         print(colntype)
         for col in colntype:
-            self.parser.add_argument(col[0], type=col[1], location='json')
-        # self.parser.add_argument('name', type=str, required=True,
-        #                          help='No name specified', location='json')
-        # self.parser.add_argument('code', type=str, default="", location='json')
+            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
         super(ShipAPI, self).__init__()
 
     def get(self, id):
