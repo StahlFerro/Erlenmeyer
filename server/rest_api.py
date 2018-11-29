@@ -25,11 +25,10 @@ class ShipAPI(Resource):
         return get_json_data(Ship, get_api_columns(Ship), id, web_api=True)
 
     def put(self, id):
-        data = dict(request.args)
-        print(data)
-        print('====================================')
         args = self.parser.parse_args()
-        print(args)
+        ship = Ship(**args)
+        print(ship)
+        pprint(get_json_data(Ship, get_api_columns(Ship), ship.id))
 
     def delete(self, id):
         pass
