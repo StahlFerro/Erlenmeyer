@@ -14,21 +14,21 @@ from server.models import User, format_headers, get_web_columns, get_json_data
 import json
 
 
-def get_data(id: int = None):
-    count = 100
-    charlength = 20
-    numlength = 25
-    data = [{
-        'id': x,
-        'Name': "".join(choices(string.ascii_letters, k=charlength)),
-        'Code': "".join(choices(string.digits, k=numlength)),
-        'Speed': randint(0, 10),
-        # 'Launch date': f"{randint(1900, 2018)}-{randint(1,12)}-{randint(1-31)}"
-    } for x in range(0, count)]
-    if not id:
-        return data
-    else:
-        return [d for d in data if d['id'] == id]
+# def get_data(id: int = None):
+#     count = 100
+#     charlength = 20
+#     numlength = 25
+#     data = [{
+#         'id': x,
+#         'Name': "".join(choices(string.ascii_letters, k=charlength)),
+#         'Code': "".join(choices(string.digits, k=numlength)),
+#         'Speed': randint(0, 10),
+#         'Launch date': f"{randint(1900, 2018)}-{randint(1,12)}-{randint(1-31)}"
+#     } for x in range(0, count)]
+#     if not id:
+#         return data
+#     else:
+#         return [d for d in data if d['id'] == id]
 
 
 @app.route('/', methods=['GET', 'POST'])

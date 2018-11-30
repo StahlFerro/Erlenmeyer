@@ -132,7 +132,7 @@ def get_json_data(model, columns, id=None, web_api=False):
         for col in cols:
             # print(cols)
             val = record.__getattribute__(col)
-            print(type(type(val)))
+            # print(type(type(val)))
             try:
                 json.dumps(val)
                 data[col] = val
@@ -186,7 +186,6 @@ def format_headers(headers: list = None):
             h = 'Status'
         new_headers.append(h)
     return new_headers
-
 
 
 print(__name__)

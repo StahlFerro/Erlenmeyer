@@ -10,8 +10,8 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or postgres_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
 def is_list(obj_type):
-    # print('triggered')
     if obj_type is list:
         return True
     else:
