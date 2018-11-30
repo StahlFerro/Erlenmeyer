@@ -25,5 +25,5 @@
 
 # IMVR exclusion for css files
 # ============
-# server/static/* linguist-vendored
+server/static/* linguist-vendored
 # server/templates/* linguist-vendored
