@@ -62,7 +62,7 @@ def ship_type(ship_type_id: int=None):
     cap_headers = format_headers(stype_cols)
     stype_data = get_json_data(model=ShipType, columns=stype_cols, id=ship_type_id)
     print('ship type data', stype_data)
-    return render_template('registry.html', title='Ships', headers=stype_cols, data=stype_data,
+    return render_template('registry.html', title='Ship Types', headers=stype_cols, data=stype_data,
                            cap_headers=cap_headers, index=1)
 
 
@@ -74,7 +74,7 @@ def ship_status(ship_status_id: int=None):
     cap_headers = format_headers(stat_cols)
     stat_data = get_json_data(model=ShipStatus, columns=stat_cols, id=ship_status_id)
     print('ship type data', stat_data)
-    return render_template('registry.html', title='Ships', headers=stat_cols, data=stat_data,
+    return render_template('registry.html', title='Ship Statuses', headers=stat_cols, data=stat_data,
                            cap_headers=cap_headers, index=1)
 
 

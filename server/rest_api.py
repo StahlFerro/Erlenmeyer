@@ -28,7 +28,6 @@ class ShipAPI(Resource):
         args = self.parser.parse_args()
         ship = Ship(**args)
         print(ship)
-        pprint(get_json_data(Ship, get_api_columns(Ship), ship.id))
 
     def delete(self, id):
         pass
@@ -81,11 +80,21 @@ class EngineListAPI(Resource):
 
 
 class EngineAPI(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        colntype = get_api_columns(Engine, include_type=True)
+        print(colntype)
+        for col in colntype:
+            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
+        super(EngineAPI, self).__init__()
+
     def get(self, id):
         return get_json_data(Engine, get_api_columns(Engine), id, web_api=True)
 
     def put(self, id):
-        pass
+        args = self.parser.parse_args()
+        engine = Engine(**args)
+        print(engine)
 
     def delete(self, id):
         pass
@@ -100,11 +109,21 @@ class BuilderListAPI(Resource):
 
 
 class BuilderAPI(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        colntype = get_api_columns(Builder, include_type=True)
+        print(colntype)
+        for col in colntype:
+            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
+        super(BuilderAPI, self).__init__()
+
     def get(self, id):
         return get_json_data(Builder, get_api_columns(Builder), id, web_api=True)
 
     def put(self, id):
-        pass
+        args = self.parser.parse_args()
+        builder = Builder(**args)
+        print(builder)
 
     def delete(self, id):
         pass
