@@ -124,4 +124,8 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/user_profile')
+def user_profile():
+    return render_template('user_profile.html', user=current_user)
+
 print(__name__)

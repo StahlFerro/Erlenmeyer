@@ -3,6 +3,7 @@
 <section class="section">
     <div class="content">
         <h1 class="is-size-1 has-text-centered">{{ title }}</h1>
+        <h4 class="is-size-4 has-text-centered"><a href="{{ url_for('index') }}">Home</a></h4>
         <nav class="level is-mobile">
             <!--<div class="level-left">-->
             <!--<div class="level-item has-text-centered">-->
@@ -43,9 +44,9 @@
                 {% for h in headers %}
                 <td>
                     {% if type(d[h]) is is_list %}
-                        <a href="{{ d[h][1] }}">{{ d[h][0] }}</a>
+                    <a href="{{ d[h][1] }}">{{ d[h][0] }}</a>
                     {% else %}
-                        {{ d[h] }}
+                    {{ d[h] }}
                     {% endif %}
                 </td>
                 {% endfor %}
