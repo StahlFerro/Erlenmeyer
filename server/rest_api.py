@@ -129,14 +129,14 @@ class BuilderAPI(Resource):
         pass
 
 
-api.add_resource(ShipListAPI, '/api/ships', endpoint='shiplist_api')
+api.add_resource(ShipListAPI, '/api/ships', endpoint='ships_api')
 api.add_resource(ShipAPI, '/api/ships/<int:id>', endpoint='ship_api')
-api.add_resource(EngineListAPI, '/api/engines', endpoint='enginelist_api')
+api.add_resource(EngineListAPI, '/api/engines', endpoint='engines_api')
 api.add_resource(EngineAPI, '/api/engines/<int:id>', endpoint='engine_api')
-api.add_resource(BuilderListAPI, '/api/builders', endpoint='builderlist_api')
+api.add_resource(BuilderListAPI, '/api/builders', endpoint='builders_api')
 api.add_resource(BuilderAPI, '/api/builders/<int:id>', endpoint='builder_api')
-api.add_resource(ShipTypeListAPI, '/api/ship_types', endpoint='ship_typelist_api')
+api.add_resource(ShipTypeListAPI, '/api/ship_types', endpoint='ship_types_api')
 api.add_resource(ShipTypeAPI, '/api/ship_types/<int:id>', endpoint='ship_type_api')
-api.add_resource(ShipStatusListAPI, '/api/ship_statuses', endpoint='ship_statuslist_api')
+api.add_resource(ShipStatusListAPI, '/api/ship_statuses', endpoint='ship_statuses_api')
 api.add_resource(ShipStatusAPI, '/api/ship_statuses/<int:id>', endpoint='ship_status_api')
 print(__name__)

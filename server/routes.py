@@ -1,9 +1,7 @@
 import string
 from random import choices, randint
 from pprint import pprint
-
 from sqlalchemy.dialects.mssql.information_schema import columns
-
 from server import app, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
 from flask import request, render_template, redirect, jsonify, flash, url_for, abort
@@ -124,5 +122,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 print(__name__)
