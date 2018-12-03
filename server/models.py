@@ -41,6 +41,7 @@ class ShipType(db.Model):
 class ShipStatus(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True)
+    description = db.Column(db.String(150))
     ship_ids = db.relationship('Ship', backref='ship_status', lazy='dynamic')
 
     def __repr__(self):
