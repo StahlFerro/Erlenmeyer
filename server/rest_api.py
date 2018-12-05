@@ -1,15 +1,26 @@
 from pprint import pprint
-from server import app, api, db
+from server import app, api, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder, get_json_data, get_api_columns
 from flask_restful import Resource, reqparse, request
 
 
 class ShipListAPI(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        colntype = get_api_columns(Ship, include_type=True)
+        print(colntype)
+        for col in colntype:
+            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
+        super(ShipListAPI, self).__init__()
+
     def get(self):
         return get_json_data(Ship, get_api_columns(Ship), web_api=True)
 
     def post(self):
         pass
+
+    def put(self):
+        return {'json': 'putin'}
 
 
 class ShipAPI(Resource):
@@ -27,7 +38,7 @@ class ShipAPI(Resource):
     def put(self, id):
         args = self.parser.parse_args()
         ship = Ship(**args)
-        print(ship)
+        print(ship, ship.id, ship.name, ship.code)
 
     def delete(self, id):
         pass

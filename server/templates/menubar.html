@@ -39,7 +39,11 @@
             <nav class="level">
 
                 <div class="level-item">
+                    {% if is_login %}
                     <a class="button is-info" href="{{ url_for('user_profile') }}">My Profile</a>
+                    {% else %}
+                    <a class="button is-info">Register</a>
+                    {% endif %}
                 </div>
 
                 <div class="level-item">
