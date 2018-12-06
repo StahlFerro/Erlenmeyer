@@ -26,7 +26,7 @@ Install the requirements from the `requirements.txt` file included in the projec
 ```
 $ pip install -r requirements.txt
 ```
-Create a postgres database named `IMVR_DATA`, either from the command line, or from a GUI, and then backup the data from `data.sql`
+Create a postgres database named `IMVR_DATA`, either from the command line, or from a GUI like pgAdmin
 ```
 psql -U postgres
 CREATE DATABASE IMVR_DATA
