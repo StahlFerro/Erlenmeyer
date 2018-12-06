@@ -1,8 +1,10 @@
 from pprint import pprint
+from collections import OrderedDict
 from server import app, api, db, session
-from server.models import Ship, ShipType, ShipStatus, Engine, Builder, get_json_data, get_api_columns
+from server.models import Ship, ShipType, ShipStatus, Engine, Builder
+from server.utils.orm_helpers import get_api_columns, get_json_data
+from server.utils.validator import get_schema, validate_request
 from flask_restful import Resource, reqparse, request
-from flask import make_response
 
 
 class ShipListAPI(Resource):
@@ -18,8 +20,13 @@ class ShipListAPI(Resource):
         return get_json_data(Ship, get_api_columns(Ship), web_api=True)
 
     def post(self):
-        args = self.parser.parse_args()
-        pprint(args)
+        print('======= POST ======')
+        req = request.json
+        cols = dict(get_api_columns(Ship, include_type=True))
+
+        # m = marshal(req, cols)
+        # args = self.parser.parse_args()
+        # pprint(args)
 
     def put(self):
         args = self.parser.parse_args()
@@ -42,6 +49,13 @@ class ShipAPI(Resource):
 
     def get(self, id):
         return get_json_data(Ship, get_api_columns(Ship), id, web_api=True)
+
+    def post(self, id):
+        is_valid, errors = validate_request(request.json, get_schema(Ship))
+        if is_valid:
+            return {'result': 'Success'}, 200
+        else:
+            return {'fail': errors}, 400
 
     def put(self, id):
         pass

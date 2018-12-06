@@ -1,8 +1,8 @@
 from flask import Flask
 from config import Config, is_list
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_login import LoginManager
 from flask_restful import Api
 
 app = Flask(__name__)
@@ -16,4 +16,4 @@ db = SQLAlchemy(app)
 session = db.session
 migrate = Migrate(app, db)
 
-from server import routes, models, rest_api
+from server import routes, models, rest_api, utils

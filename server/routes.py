@@ -8,7 +8,8 @@ from flask import request, render_template, redirect, jsonify, flash, url_for, a
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from werkzeug.urls import url_parse
 from server.forms import LoginForm
-from server.models import User, format_headers, get_web_columns, get_json_data
+from server.models import User
+from server.utils.orm_helpers import format_headers, get_web_columns, get_json_data
 import json
 
 

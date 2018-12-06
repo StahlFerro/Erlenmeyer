@@ -11,7 +11,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-def is_list(obj_type):
+def is_list(obj_type):  # Jinja custom test to determine whether a variable is a list
     if obj_type is list:
         return True
     else:

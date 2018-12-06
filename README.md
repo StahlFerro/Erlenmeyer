@@ -56,15 +56,14 @@ curl -i http://localhost:5000/api/ships -X GET
 * [PostgreSQL](https://www.postgresql.org/) - Database
 * [SQLAlchemy](https://www.sqlalchemy.org/) - Object-Relational Mapper (ORM, packaged with flask_sqlalchemy)
 * [Jinja2](http://jinja.pocoo.org/docs/2.10/) - Web templating engine (packaged together with Flask)
+* [Cerberus](http://docs.python-cerberus.org/en/stable/index.html) - Request validation
 
 ## Authors
 
 * **StahlFerro** - *Initial work*
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments

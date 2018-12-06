@@ -1,5 +1,6 @@
 alembic==1.0.3
 aniso8601==4.0.1
+Cerberus==1.2
 Click==7.0
 Flask==1.0.2
 Flask-Login==0.4.1
