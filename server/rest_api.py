@@ -4,29 +4,25 @@ from server import app, api, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
 from server.utils.orm_helpers import get_api_columns, get_json_data
 from server.utils.validator import get_schema, validate_request
+from server.utils.api_transaction import insert_records
 from flask_restful import Resource, reqparse, request
 
 
 class ShipListAPI(Resource):
     def __init__(self):
-        self.parser = reqparse.RequestParser()
-        colntype = get_api_columns(Ship, include_type=True)
-        print(colntype)
-        for col in colntype:
-            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
-        super(ShipListAPI, self).__init__()
+        self.model = Ship
 
     def get(self):
-        return get_json_data(Ship, get_api_columns(Ship), web_api=True)
+        return get_json_data(self.model, get_api_columns(self.model), web_api=True)
 
     def post(self):
-        print('======= POST ======')
-        req = request.json
-        cols = dict(get_api_columns(Ship, include_type=True))
-
-        # m = marshal(req, cols)
-        # args = self.parser.parse_args()
-        # pprint(args)
+        print('======= POST multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        schema = get_schema(self.model, 'POST')
+        response, status_code = insert_records(self.model, docs, schema)
+        return response, status_code
 
     def put(self):
         args = self.parser.parse_args()
@@ -51,8 +47,11 @@ class ShipAPI(Resource):
         return get_json_data(Ship, get_api_columns(Ship), id, web_api=True)
 
     def post(self, id):
-        is_valid, errors = validate_request(request.json, get_schema(Ship))
+        doc = request.json
+        is_valid, errors = validate_request(doc, get_schema(Ship, 'POST'))
         if is_valid:
+            new_ship = Ship(**doc)
+            print('Successfully created ship:', new_ship)
             return {'result': 'Success'}, 200
         else:
             return {'fail': errors}, 400

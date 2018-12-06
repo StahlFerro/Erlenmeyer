@@ -2,6 +2,7 @@ from pprint import pprint
 import json
 from flask_sqlalchemy import inspect, orm, DefaultMeta
 from datetime import date, datetime
+from server import session
 
 
 def get_web_columns(model):
@@ -12,11 +13,11 @@ def get_web_columns(model):
     return columns
 
 
-def get_api_columns(model, include_type=False, include_limit=False):
+def get_api_columns(model, include_type=False, for_schema=False):
     mapper = inspect(model)
     if include_type:
         columns = [(col.key, col.type.__visit_name__) for col in mapper.columns]
-        if include_limit:
+        if for_schema:
             columns = [{
                 'name': col.key,
                 'type': col.type.__visit_name__,
