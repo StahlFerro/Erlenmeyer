@@ -107,11 +107,18 @@ def get_api_columns(model, include_type=False):
     return columns
 
 
+def positive_int(value):
+    intval = int(value)
+    if intval < 1:
+        raise TypeError(f"Id {value} is not a valid id! (should be greater than 0)")
+    return intval
+
+
 def get_type(text: str):
     if text == 'string':
         return str
     elif text == 'integer':
-        return int
+        return positive_int
     elif text == 'date':
         return date
     elif text == 'datetime':

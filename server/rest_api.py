@@ -2,6 +2,7 @@ from pprint import pprint
 from server import app, api, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder, get_json_data, get_api_columns
 from flask_restful import Resource, reqparse, request
+from flask import make_response
 
 
 class ShipListAPI(Resource):
@@ -17,10 +18,17 @@ class ShipListAPI(Resource):
         return get_json_data(Ship, get_api_columns(Ship), web_api=True)
 
     def post(self):
-        pass
+        args = self.parser.parse_args()
+        pprint(args)
 
     def put(self):
-        return {'json': 'putin'}
+        args = self.parser.parse_args()
+        pprint(args)
+        # ship = Ship(**args)
+        # print(ship, ship.id, ship.name, ship.code)
+
+    def delete(self):
+        pass
 
 
 class ShipAPI(Resource):
@@ -36,9 +44,10 @@ class ShipAPI(Resource):
         return get_json_data(Ship, get_api_columns(Ship), id, web_api=True)
 
     def put(self, id):
-        args = self.parser.parse_args()
-        ship = Ship(**args)
-        print(ship, ship.id, ship.name, ship.code)
+        pass
+        # args = self.parser.parse_args()
+        # ship = Ship(**args)
+        # print(ship, ship.id, ship.name, ship.code)
 
     def delete(self, id):
         pass
@@ -49,6 +58,12 @@ class ShipTypeListAPI(Resource):
         return get_json_data(ShipType, get_api_columns(Ship), web_api=True)
 
     def post(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
         pass
 
 
@@ -70,6 +85,12 @@ class ShipStatusListAPI(Resource):
     def post(self):
         pass
 
+    def put(self):
+        pass
+
+    def delete(self):
+        pass
+
 
 class ShipStatusAPI(Resource):
     def get(self, id):
@@ -87,6 +108,12 @@ class EngineListAPI(Resource):
         return get_json_data(Engine, get_api_columns(Engine), web_api=True)
 
     def post(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
         pass
 
 
@@ -116,6 +143,12 @@ class BuilderListAPI(Resource):
         return get_json_data(Builder, get_api_columns(Builder), web_api=True)
 
     def post(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
         pass
 
 
