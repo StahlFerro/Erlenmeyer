@@ -4,7 +4,7 @@ from server import app, api, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
 from server.utils.orm_helpers import get_api_columns, get_json_data
 from server.utils.validator import get_schema, validate_request
-from server.utils.api_transaction import insert_records
+from server.utils.api_transaction import create_records
 from flask_restful import Resource, reqparse, request
 
 
@@ -21,7 +21,7 @@ class ShipListAPI(Resource):
         print('Json is valid')
         pprint(docs)
         schema = get_schema(self.model, 'POST')
-        response, status_code = insert_records(self.model, docs, schema)
+        response, status_code = create_records(self.model, docs, schema)
         return response, status_code
 
     def put(self):

@@ -2,7 +2,8 @@ from pprint import pprint
 from server import db, session
 from server.utils.validator import validate_request
 
-def insert_records(model, docs, schema) -> (dict, int):
+
+def create_records(model, docs, schema) -> (dict, int):
     errors_list = []
     for doc in docs:
         is_valid, errors = validate_request(doc, schema)
