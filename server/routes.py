@@ -129,4 +129,5 @@ def logout():
 def user_profile():
     return render_template('user_profile.html', user=current_user)
 
+
 print(__name__)

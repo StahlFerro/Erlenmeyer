@@ -3,8 +3,7 @@ from collections import OrderedDict
 from server import app, api, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
 from server.utils.orm_helpers import get_api_columns, get_json_data
-from server.utils.validator import get_schema, validate_request
-from server.utils.api_transaction import create_records
+from server.utils.api_transaction import get_records, create_records, update_records, delete_record
 from flask_restful import Resource, reqparse, request
 
 
@@ -13,177 +12,164 @@ class ShipListAPI(Resource):
         self.model = Ship
 
     def get(self):
-        return get_json_data(self.model, get_api_columns(self.model), web_api=True)
+        return get_records(self.model)
 
     def post(self):
         print('======= POST multi test ======')
         docs = request.json
         print('Json is valid')
         pprint(docs)
-        schema = get_schema(self.model, 'POST')
-        response, status_code = create_records(self.model, docs, schema)
-        return response, status_code
+        return create_records(self.model, docs)
 
     def put(self):
-        args = self.parser.parse_args()
-        pprint(args)
-        # ship = Ship(**args)
-        # print(ship, ship.id, ship.name, ship.code)
-
-    def delete(self):
-        pass
+        print('======= PUT multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return update_records(self.model, docs)
 
 
 class ShipAPI(Resource):
     def __init__(self):
-        self.parser = reqparse.RequestParser()
-        colntype = get_api_columns(Ship, include_type=True)
-        print(colntype)
-        for col in colntype:
-            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
-        super(ShipAPI, self).__init__()
+        self.model = Ship
 
     def get(self, id):
-        return get_json_data(Ship, get_api_columns(Ship), id, web_api=True)
-
-    def post(self, id):
-        doc = request.json
-        is_valid, errors = validate_request(doc, get_schema(Ship, 'POST'))
-        if is_valid:
-            new_ship = Ship(**doc)
-            print('Successfully created ship:', new_ship)
-            return {'result': 'Success'}, 200
-        else:
-            return {'fail': errors}, 400
-
-    def put(self, id):
-        pass
-        # args = self.parser.parse_args()
-        # ship = Ship(**args)
-        # print(ship, ship.id, ship.name, ship.code)
+        return get_records(self.model, id)
 
     def delete(self, id):
-        pass
+        return delete_record(self.model, id)
 
 
 class ShipTypeListAPI(Resource):
+    def __init__(self):
+        self.model = ShipType
+
     def get(self):
-        return get_json_data(ShipType, get_api_columns(Ship), web_api=True)
+        return get_records(self.model)
 
     def post(self):
-        pass
+        print('======= POST multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return create_records(self.model, docs)
 
     def put(self):
-        pass
-
-    def delete(self):
-        pass
+        print('======= PUT multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return update_records(self.model, docs)
 
 
 class ShipTypeAPI(Resource):
-    def get(self, id):
-        return get_json_data(ShipType, get_api_columns(Ship), id, web_api=True)
+    def __init__(self):
+        self.model = ShipType
 
-    def put(self, id):
-        pass
+    def get(self, id):
+        return get_records(self.model, id)
 
     def delete(self, id):
-        pass
+        return delete_record(self.model, id)
 
 
 class ShipStatusListAPI(Resource):
+    def __init__(self):
+        self.model = ShipStatus
+
     def get(self):
-        return get_json_data(ShipStatus, get_api_columns(Ship), web_api=True)
+        return get_records(self.model)
 
     def post(self):
-        pass
+        print('======= POST multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return create_records(self.model, docs)
 
     def put(self):
-        pass
-
-    def delete(self):
-        pass
+        print('======= PUT multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return update_records(self.model, docs)
 
 
 class ShipStatusAPI(Resource):
-    def get(self, id):
-        return get_json_data(ShipStatus, get_api_columns(Ship), id, web_api=True)
+    def __init__(self):
+        self.model = ShipStatus
 
-    def put(self, id):
-        pass
+    def get(self, id):
+        return get_records(self.model, id)
 
     def delete(self, id):
-        pass
+        return delete_record(self.model, id)
 
 
 class EngineListAPI(Resource):
+    def __init__(self):
+        self.model = Engine
+
     def get(self):
-        return get_json_data(Engine, get_api_columns(Engine), web_api=True)
+        return get_records(self.model)
 
     def post(self):
-        pass
+        print('======= POST multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return create_records(self.model, docs)
 
     def put(self):
-        pass
-
-    def delete(self):
-        pass
+        print('======= PUT multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return update_records(self.model, docs)
 
 
 class EngineAPI(Resource):
     def __init__(self):
-        self.parser = reqparse.RequestParser()
-        colntype = get_api_columns(Engine, include_type=True)
-        print(colntype)
-        for col in colntype:
-            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
-        super(EngineAPI, self).__init__()
+        self.model = Engine
 
     def get(self, id):
-        return get_json_data(Engine, get_api_columns(Engine), id, web_api=True)
-
-    def put(self, id):
-        args = self.parser.parse_args()
-        engine = Engine(**args)
-        print(engine)
+        return get_records(self.model, id)
 
     def delete(self, id):
-        pass
+        return delete_record(self.model, id)
 
 
 class BuilderListAPI(Resource):
+    def __init__(self):
+        self.model = Engine
+
     def get(self):
-        return get_json_data(Builder, get_api_columns(Builder), web_api=True)
+        return get_records(self.model)
 
     def post(self):
-        pass
+        print('======= POST multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return create_records(self.model, docs)
 
     def put(self):
-        pass
-
-    def delete(self):
-        pass
+        print('======= PUT multi test ======')
+        docs = request.json
+        print('Json is valid')
+        pprint(docs)
+        return update_records(self.model, docs)
 
 
 class BuilderAPI(Resource):
     def __init__(self):
-        self.parser = reqparse.RequestParser()
-        colntype = get_api_columns(Builder, include_type=True)
-        print(colntype)
-        for col in colntype:
-            self.parser.add_argument(col[0], type=col[1], location='json', required=(True if col[0] == 'id' else False))
-        super(BuilderAPI, self).__init__()
+        self.model = Builder
 
     def get(self, id):
-        return get_json_data(Builder, get_api_columns(Builder), id, web_api=True)
-
-    def put(self, id):
-        args = self.parser.parse_args()
-        builder = Builder(**args)
-        print(builder)
+        return get_records(self.model, id)
 
     def delete(self, id):
-        pass
+        return delete_record(self.model, id)
 
 
 api.add_resource(ShipListAPI, '/api/ships', endpoint='ships_api')
