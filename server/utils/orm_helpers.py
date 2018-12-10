@@ -1,8 +1,8 @@
-from pprint import pprint
 import json
-from flask_sqlalchemy import inspect, orm, DefaultMeta
+from pprint import pprint
 from datetime import date, datetime
-from server import session
+
+from flask_sqlalchemy import inspect, orm, DefaultMeta
 
 
 def get_web_columns(model):

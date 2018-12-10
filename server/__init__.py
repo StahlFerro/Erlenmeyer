@@ -1,9 +1,11 @@
 from flask import Flask
-from config import Config, is_list
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Api
+
+from config import Config, is_list
+
 
 app = Flask(__name__)
 app.config.from_object(Config)

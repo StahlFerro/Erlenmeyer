@@ -1,8 +1,10 @@
 from pprint import pprint
 from collections import OrderedDict
-from cerberus import Validator
-from server.utils.orm_helpers import get_api_columns
 from typing import Dict, List
+
+from cerberus import Validator
+
+from server.utils.orm_helpers import get_api_columns
 
 
 def get_schema(model):

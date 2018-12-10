@@ -1,33 +1,13 @@
-import string
-from random import choices, randint
-from pprint import pprint
-from sqlalchemy.dialects.mssql.information_schema import columns
+from werkzeug.urls import url_parse
+from flask_login import current_user, login_user, logout_user
+from flask import request, render_template, redirect, jsonify, flash, url_for, abort
+
 from server import app, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
-from flask import request, render_template, redirect, jsonify, flash, url_for, abort
-from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
-from werkzeug.urls import url_parse
 from server.forms import LoginForm
 from server.models import User
 from server.utils.orm_helpers import format_headers, get_web_columns, get_json_data
-import json
-
-
-# def get_data(id: int = None):
-#     count = 100
-#     charlength = 20
-#     numlength = 25
-#     data = [{
-#         'id': x,
-#         'Name': "".join(choices(string.ascii_letters, k=charlength)),
-#         'Code': "".join(choices(string.digits, k=numlength)),
-#         'Speed': randint(0, 10),
-#         'Launch date': f"{randint(1900, 2018)}-{randint(1,12)}-{randint(1-31)}"
-#     } for x in range(0, count)]
-#     if not id:
-#         return data
-#     else:
-#         return [d for d in data if d['id'] == id]
+from server.utils.url_helpers import is_safe_url
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -114,6 +94,8 @@ def login():
             next_page = request.args.get('next')
             if not next_page or url_parse(next_page).netloc != '':
                 next_page = url_for('index')
+            if not is_safe_url(next_page):
+                return app.abort(400)
             print(f'next page: {next_page}')
             return redirect(next_page)
     return render_template('gate.html', title='Login', form=form)

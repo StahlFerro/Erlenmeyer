@@ -1,8 +1,10 @@
 from pydoc import locate
-from server import db, login
+from pprint import pprint
+
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from pprint import pprint
+
+from server import db, login
 
 
 class User(UserMixin, db.Model):
