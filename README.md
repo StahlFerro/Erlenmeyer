@@ -20,7 +20,9 @@ Give examples
 Create a virtual environment for the project, and then activate it
 ```
 python3.7 -m venv venv
-source venv/bin/activate
+(Linux bash) source venv/bin/activate
+(Windows powershell) venv\bin\Activate.ps1
+(Windows cmd.exe) venv\bin\activate.bat
 ```
 Install the requirements from the `requirements.txt` file included in the project
 ```
@@ -44,7 +46,7 @@ Run the app
 ```
 flask run
 ```
-Try from the browser (localhost:5000), or test the API as stated below
+Try from the browser (localhost:5000), or test the API using `curl` below
 ```
 curl -i http://localhost:5000/api/ships -X GET
 ```
@@ -53,8 +55,8 @@ curl -i http://localhost:5000/api/ships -X GET
 
 * [Python](https://www.python.org/) - Language
 * [Flask](http://flask.pocoo.org/) - The web framework used
+* [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/) - Object-Relational Mapper (ORM)
 * [PostgreSQL](https://www.postgresql.org/) - Database
-* [SQLAlchemy](https://www.sqlalchemy.org/) - Object-Relational Mapper (ORM, packaged with flask_sqlalchemy)
 * [Jinja2](http://jinja.pocoo.org/docs/2.10/) - Web templating engine (packaged together with Flask)
 * [Cerberus](http://docs.python-cerberus.org/en/stable/index.html) - Request validation
 
