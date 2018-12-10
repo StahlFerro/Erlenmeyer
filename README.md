@@ -11,9 +11,6 @@ These instructions will get you a copy of the project up and running on your loc
 These are the following requirements to run IMVR
 - Python 3.7
 - PostgreSQL 10.0 or above
-```
-Give examples
-```
 
 ### Installing
 
@@ -26,7 +23,7 @@ python3.7 -m venv venv
 ```
 Install the requirements from the `requirements.txt` file included in the project
 ```
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 Create a postgres database named `IMVR_DATA`, either from the command line, or from a GUI like pgAdmin
 ```
