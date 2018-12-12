@@ -1,16 +1,22 @@
 from pydoc import locate
 from pprint import pprint
+import secrets
 
 from passlib.hash import argon2
 from flask_login import UserMixin
+from flask_jwt_extended import create_access_token, create_refresh_token
 
 from server import db, login
 
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), index=True, unique=True)
+    username = db.Column(db.String(20), index=True, unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
+    client_secret = db.Column(db.String(256))
+
+    def __init__(self):
+        self.client_secret = secrets.token_urlsafe(80)
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -20,6 +26,9 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password: str):
         return argon2.verify(password, self.password_hash)
+
+    def intialize_tokens(self):
+        x = create_access_token()
 
 
 @login.user_loader
