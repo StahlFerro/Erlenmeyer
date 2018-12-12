@@ -16,7 +16,7 @@ class User(UserMixin, db.Model):
     client_secret = db.Column(db.String(256))
 
     def __init__(self):
-        self.client_secret = secrets.token_urlsafe(80)
+        self.client_secret = secrets.token_urlsafe(180)
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -28,7 +28,8 @@ class User(UserMixin, db.Model):
         return argon2.verify(password, self.password_hash)
 
     def intialize_tokens(self):
-        x = create_access_token()
+        return create_access_token(identity=self.client_secret), create_refresh_token(identity=self.client_secret)
+
 
 
 @login.user_loader

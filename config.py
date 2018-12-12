@@ -9,6 +9,7 @@ postgres_url = f"postgresql://postgres@localhost:5432/IMVR_DATA"
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'sushi'
+    JWT_SECRET_KEY = 'laksa'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or postgres_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

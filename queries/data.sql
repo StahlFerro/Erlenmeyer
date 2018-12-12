@@ -142,7 +142,9 @@ INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, bu
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."user" (username, password_hash) VALUES ('admin', '$argon2i$v=19$m=102400,t=4,p=8$7b0X4nxvDaH03luL8R7jHOMcQwiBUIrxPmcsJUSoVeqdcy4lZEzJ2Q$7GWdamuppqqQqjBb9m1R+g');
+INSERT INTO public."user" (username, password_hash, client_secret)
+VALUES ('admin', '$argon2i$v=19$m=102400,t=4,p=8$7b0X4nxvDaH03luL8R7jHOMcQwiBUIrxPmcsJUSoVeqdcy4lZEzJ2Q$7GWdamuppqqQqjBb9m1R+g',
+'hUmP_Az1Q4zJ98xuC1F56TtJTa8mrunK4oLny7rNbhbRMqGQJtG4fMDmHWExYs3nfTwUN8COKgXHv7vXht2eu3QTUsgdnWaed5dAZDODNexgxqBr1fNq0qaDQgEuDXZ2qQ2OgaJsSUXIAof5Q98ivLu1mjUfmNxYiDGCXsX5IqVEtbTk');
 
 
 --
