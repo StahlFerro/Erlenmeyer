@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password: str):
         return argon2.verify(password, self.password_hash)
 
-    def intialize_tokens(self):
+    def initialize_tokens(self):
         return create_access_token(identity=self.client_secret), create_refresh_token(identity=self.client_secret)
 
 
