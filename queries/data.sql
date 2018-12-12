@@ -142,7 +142,7 @@ INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, bu
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."user" (username, password_hash) VALUES ('admin', 'pbkdf2:sha256:50000$ymEekEbS$a46f2298ce0a74e484dbce39b0b1f016c474f474e07837c457cdee90df1917f3');
+INSERT INTO public."user" (username, password_hash) VALUES ('admin', '$argon2i$v=19$m=102400,t=4,p=8$7b0X4nxvDaH03luL8R7jHOMcQwiBUIrxPmcsJUSoVeqdcy4lZEzJ2Q$7GWdamuppqqQqjBb9m1R+g');
 
 
 --

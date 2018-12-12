@@ -1,7 +1,7 @@
 from pydoc import locate
 from pprint import pprint
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from passlib.hash import argon2
 from flask_login import UserMixin
 
 from server import db, login
@@ -16,10 +16,10 @@ class User(UserMixin, db.Model):
         return f"<User {self.username}>"
 
     def set_password(self, password: str):
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = argon2.using(salt_len=40, rounds=4).hash(password)
 
     def check_password(self, password: str):
-        return check_password_hash(self.password_hash, password)
+        return argon2.verify(password, self.password_hash)
 
 
 @login.user_loader
