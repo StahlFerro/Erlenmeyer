@@ -1,23 +1,26 @@
 from pprint import pprint
 from collections import OrderedDict
-from typing import Dict, List
+from typing import Dict, List, Any
 
 from cerberus import Validator
 
 from server.utils.orm_helpers import get_api_columns
 
 
-def get_schema(model):
-    columns = get_api_columns(model, include_type=True, for_schema=True)
-    print('==== Get Schema obtained columns ====')
+def get_schema(model, exclude_id=False):
+    columns = get_api_columns(model, include_type=True, for_schema=True, exclude_id=exclude_id)
+    print('==== Obtained API columns ====')
     pprint(columns)
     schema = OrderedDict()
     for col in columns:
-        schema[col['name']] = {'type': col['type'], 'required': col['required']}
-        if col['name'] == 'id':
-            schema[col['name']].update({'min': 1})
+        colname = col['name']
+        schema[colname] = {'type': col['type'], 'required': col['required']}
+        if colname == 'id':
+            schema[colname].update({'min': 1})
+        if 'empty' in col.keys() and not col['empty']:
+            schema[colname].update({'empty': False})
         if col['maxlength']:
-            schema[col['name']].update({'maxlength': col['maxlength']})
+            schema[colname].update({'maxlength': col['maxlength']})
     print('==== Obtained schema ====')
     pprint(schema)
     return schema

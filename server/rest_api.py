@@ -1,11 +1,9 @@
 from pprint import pprint
-from collections import OrderedDict
 
-from flask_restful import Resource, reqparse, request
+from flask_restful import Resource, request
 
-from server import app, api, db, session
+from server import api
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
-from server.utils.orm_helpers import get_api_columns, get_json_data
 from server.utils.api_transaction import get_records, create_records, update_records, delete_record
 
 
@@ -143,7 +141,7 @@ class EngineAPI(Resource):
 
 class BuilderListAPI(Resource):
     def __init__(self):
-        self.model = Engine
+        self.model = Builder
 
     def get(self):
         return get_records(self.model)

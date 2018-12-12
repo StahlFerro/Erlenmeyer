@@ -13,20 +13,33 @@ def get_web_columns(model):
     return columns
 
 
-def get_api_columns(model, include_type=False, for_schema=False):
+def get_api_columns(model, include_type=False, for_schema=False, exclude_id=False):
     mapper = inspect(model)
+    exceptions = []
+    if exclude_id:
+        exceptions.append('id')
     if include_type:
-        columns = [(col.key, col.type.__visit_name__) for col in mapper.columns]
         if for_schema:
-            columns = [{
-                'name': col.key,
-                'type': col.type.__visit_name__,
-                'maxlength': col.type.length if col.type.__visit_name__ == 'string' else None,
-                'required': True if col.key == 'id' else False
-            } for col in mapper.columns]
+            columns = []
+            for col in mapper.columns:
+                if col.key in exceptions:
+                    continue
+                rules = {
+                    'name': col.key,
+                    'type': col.type.__visit_name__,
+                    'maxlength': col.type.length if col.type.__visit_name__ == 'string' else None,
+                    'required': not col.nullable
+                }
+                if rules['type'] == 'string' and not col.nullable:
+                    rules['empty'] = False
+                # print("RULES", rules)
+                columns.append(rules)
+        else:
+            columns = [(col.key, col.type.__visit_name__) for col in mapper.columns if col.key not in exceptions]
     else:
-        columns = [col.key for col in mapper.columns]
-    print('columns', columns)
+        columns = [col.key for col in mapper.columns if col.key not in exceptions]
+    print('Obtained api columns')
+    pprint(columns)
     return columns
 
 

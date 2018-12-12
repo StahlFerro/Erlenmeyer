@@ -49,7 +49,7 @@ class ShipStatus(db.Model):
 class Ship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True)
-    code = db.Column(db.String(5), index=True)
+    code = db.Column(db.String(5), index=True, unique=True, nullable=False)
     speed = db.Column(db.Float)
     capacity = db.Column(db.Integer)
     launch_date = db.Column(db.Date)
@@ -65,7 +65,7 @@ class Ship(db.Model):
 class Engine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True)
-    code = db.Column(db.String(5), index=True)
+    code = db.Column(db.String(5), index=True, unique=True, nullable=False)
     power_output = db.Column(db.Float)
     type = db.Column(db.String(60))
     ship_ids = db.relationship('Ship', backref='engine', lazy='dynamic')
@@ -77,7 +77,7 @@ class Engine(db.Model):
 class Builder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True)
-    code = db.Column(db.String(5), index=True)
+    code = db.Column(db.String(5), index=True, unique=True, nullable=False)
     date_founded = db.Column(db.Date)
     founder = db.Column(db.String(40))
     headquarters = db.Column(db.String(40))

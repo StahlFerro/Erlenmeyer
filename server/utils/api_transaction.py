@@ -16,7 +16,7 @@ def get_records(model, id=None):
 
 def create_records(model, docs) -> (dict, int):
     model_name = model.__name__
-    schema = get_schema(model)
+    schema = get_schema(model, exclude_id=True)
     for doc in docs:
         is_valid, errors = validate_request(doc, schema)
         if not is_valid:
@@ -30,7 +30,8 @@ def create_records(model, docs) -> (dict, int):
             session.add(record)
         try:
             session.commit()
-            return {"Success": f"Added {len(new_records)} {model_name} records: {[rec.id for rec in new_records]}"}, 200
+            return {"Success": f"Added {len(new_records)} {model_name} ",
+                    "ids": [rec.id for rec in new_records]}, 200
         except Exception as e:
             session.rollback()
             if e is Exception:
