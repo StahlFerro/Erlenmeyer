@@ -7,7 +7,7 @@ from cerberus import Validator
 from server.utils.orm_helpers import get_api_columns
 
 
-def get_schema(model, exclude_id=False):
+def get_schema(model, exclude_id=False) -> Dict[str, Dict[str, Any]]:
     columns = get_api_columns(model, include_type=True, for_schema=True, exclude_id=exclude_id)
     print('==== Obtained API columns ====')
     pprint(columns)

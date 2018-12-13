@@ -2,7 +2,7 @@ from werkzeug.urls import url_parse, url_join
 from flask import request
 
 
-def is_safe_url(target):
+def is_safe_url(target) -> bool:
     ref_url = url_parse(request.host_url)
     print("=========== URL HELPERS ==========")
     print(ref_url)

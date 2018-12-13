@@ -1,11 +1,12 @@
 import json
 from pprint import pprint
 from datetime import date, datetime
+from typing import List, Dict, Any
 
 from flask_sqlalchemy import inspect, orm, DefaultMeta
 
 
-def get_web_columns(model):
+def get_web_columns(model) -> List[str]:
     mapper: orm.mapper = inspect(model)
     columns = [col.key for col in mapper.attrs if ('_id' not in col.key and '_ids' not in col.key)]
     columns.remove('id')
@@ -63,7 +64,7 @@ def positive_int(value):
 #         return locate(text)
 
 
-def get_json_data(model, columns, id=None, web_api=False):
+def get_json_data(model, columns, id=None, web_api=False) -> List[Dict[str, Any]]:
     if id:
         records = [model.query.get(id)]
     else:

@@ -15,6 +15,8 @@ def get_records(model, id=None):
 
 
 def create_records(model, docs) -> (dict, int):
+    if not docs:
+        return {"message": "Request body cannot be empty"}, 400
     model_name = model.__name__
     schema = get_schema(model, exclude_id=True)
     for doc in docs:
@@ -44,6 +46,8 @@ def create_records(model, docs) -> (dict, int):
 
 
 def update_records(model, docs) -> (dict, int):
+    if not docs:
+        return {"message": "Request body cannot be empty"}, 400
     model_name = model.__name__
     schema = get_schema(model)
     for doc in docs:
