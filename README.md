@@ -16,6 +16,7 @@ These are the following requirements to run IMVR
 
 Create a virtual environment for the project, and then activate it
 ```
+cd /path/to/IMVR
 python3.7 -m venv venv
 (Linux bash) source venv/bin/activate
 (Windows powershell) venv\bin\Activate.ps1
@@ -53,13 +54,10 @@ curl -i http://localhost:5000/api/ships -X GET
 * [Python](https://www.python.org/) - Language
 * [Flask](http://flask.pocoo.org/) - Web framework
 * [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/) - Object-Relational Mapper (ORM)
+* [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/) - REST API library
 * [PostgreSQL](https://www.postgresql.org/) - Database
 * [Jinja2](http://jinja.pocoo.org/docs/2.10/) - Web templating engine (packaged together with Flask)
 * [Cerberus](http://docs.python-cerberus.org/en/stable/index.html) - Request validation
-
-## Authors
-
-* **StahlFerro** - *Initial work*
 
 ## License
 
