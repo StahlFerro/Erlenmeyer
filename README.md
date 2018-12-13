@@ -51,7 +51,7 @@ curl -i http://localhost:5000/api/ships -X GET
 ## Built With
 
 * [Python](https://www.python.org/) - Language
-* [Flask](http://flask.pocoo.org/) - The web framework used
+* [Flask](http://flask.pocoo.org/) - Web framework
 * [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/) - Object-Relational Mapper (ORM)
 * [PostgreSQL](https://www.postgresql.org/) - Database
 * [Jinja2](http://jinja.pocoo.org/docs/2.10/) - Web templating engine (packaged together with Flask)

@@ -7,7 +7,8 @@ from passlib.hash import argon2
 from flask_login import UserMixin
 from flask_jwt_extended import create_access_token, create_refresh_token
 
-from server import db, login
+
+from server import db, login, jwt
 
 
 class User(UserMixin, db.Model):
@@ -25,18 +26,53 @@ class User(UserMixin, db.Model):
     def set_password(self, password: str):
         self.password_hash = argon2.using(salt_len=40, rounds=4).hash(password)
 
-    def check_password(self, password: str):
+    def check_password(self, password: str) -> bool:
         return argon2.verify(password, self.password_hash)
 
-    def initialize_tokens(self):
-        valid_days = timedelta(days=1)
-        return create_access_token(identity=self.client_secret, expires_delta=valid_days), \
-               create_refresh_token(identity=self.client_secret, expires_delta=valid_days)
+    def generate_access_token(self) -> str:
+        return create_access_token(self.client_secret, expires_delta=timedelta(days=1))
+
+    def generate_refresh_token(self) -> str:
+        return create_refresh_token(self.client_secret, expires_delta=timedelta(days=1))
+
+    def generate_dual_tokens(self) -> (str, str):
+        return self.generate_access_token(), self.generate_refresh_token()
+
+    @classmethod
+    def from_secret(cls, secret: str):
+        return cls.query.filter_by(client_secret=secret).first()
+
+    def reset_client_secret(self):
+        new_secret = secrets.token_urlsafe(64)
+        self.client_secret = new_secret
+        db.session.commit()
 
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+class RevokedToken(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    jti = db.Column(db.String(128), nullable=False)
+
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def is_blacklisted(cls, jti: str) -> bool:
+        record = cls.query.filter_by(jti=jti).first()
+        return bool(record)
+
+
+@jwt.token_in_blacklist_loader
+def check_if_token_blacklisted(decrypted_token):
+    print('-------{}{}{} DECRYPTED TOKEN {}{}{}-------')
+    token = decrypted_token['jti']
+    pprint(token)
+    return RevokedToken.is_blacklisted(token)
 
 
 class ShipType(db.Model):

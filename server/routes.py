@@ -6,8 +6,8 @@ from server import app, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
 from server.forms import LoginForm
 from server.models import User
-from server.utils.orm_helpers import format_headers, get_web_columns, get_json_data
-from server.utils.url_helpers import is_safe_url
+from server.utils.orm import format_headers, get_web_columns, get_json_data
+from server.utils.url import is_safe_url
 
 
 @app.route('/', methods=['GET', 'POST'])

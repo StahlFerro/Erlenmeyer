@@ -2,7 +2,7 @@ import time
 from pprint import pprint
 
 from server import db, session
-from server.utils.orm_helpers import get_json_data, get_api_columns
+from server.utils.orm import get_json_data, get_api_columns
 from server.utils.validator import get_schema, validate_request
 
 

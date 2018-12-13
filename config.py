@@ -12,6 +12,8 @@ class Config(object):
     JWT_SECRET_KEY = 'laksa'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or postgres_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JWT_BLACKLIST_ENABLED = True
+    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
 
 
 def is_list(obj_type):  # Jinja custom test to determine whether a variable is a list
