@@ -34,7 +34,6 @@ class User(UserMixin, db.Model):
                create_refresh_token(identity=self.client_secret, expires_delta=valid_days)
 
 
-
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
