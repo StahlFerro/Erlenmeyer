@@ -208,17 +208,21 @@ class UserDebugAPI(Resource):
         new_token = user.generate_access_token()
         return {"access_token": new_token}, 200
 
-    @jwt_refresh_token_required
+    @jwt_required
     def delete(self, id):
         user = User.from_secret(get_jwt_identity())
         if not user:
             return {"msg": "Token has expired"}, 401
-        user.reset_client_secret()
+        # user.reset_client_secret()
         pprint(get_raw_jwt())
         jti = get_raw_jwt()['jti']
         revoked_token = RevokedToken(jti=jti)
         revoked_token.add()
-        return {"message": "Client secret reset, all access and refresh tokens invalidated"}, 200
+        new_token = user.generate_access_token()
+        return {
+            "message": "Client secret reset, all access and refresh tokens invalidated",
+            "access_token": new_token,
+        }, 200
 
 
 api.add_resource(ShipListAPI, '/api/ships', endpoint='ships_api')
