@@ -81,7 +81,7 @@ def builder(builder_id: int=None):
 def login():
     print('gate called')
     if current_user.is_authenticated:
-        return redirect(url_for('login'))
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -109,7 +109,10 @@ def logout():
 
 @app.route('/user_profile')
 def user_profile():
-    return render_template('user_profile.html', user=current_user)
+    if current_user.is_authenticated:
+        return render_template('user_profile.html', user=current_user)
+    else:
+        return redirect(url_for('login'))
 
 
 print(__name__)
