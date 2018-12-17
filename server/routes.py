@@ -4,7 +4,7 @@ from flask import request, render_template, redirect, jsonify, flash, url_for, a
 
 from server import app, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
-from server.forms import LoginForm
+from server.forms import LoginForm, EngineForm
 from server.models import User
 from server.utils.orm import format_headers, get_web_columns, get_json_data
 from server.utils.url import is_safe_url
@@ -67,6 +67,13 @@ def engine(engine_id: int=None):
                            cap_headers=cap_headers, index=1)
 
 
+@app.route('/index/engine/create', methods=['GET', 'POST'])
+def engine_create():
+    form = EngineForm()
+    print(form.__dict__)
+    return render_template('create_engine_test.html', form=form)
+
+
 @app.route('/index/builder', methods=['GET', 'POST'])
 @app.route('/index/builder/<int:builder_id>', methods=['GET', 'POST'])
 def builder(builder_id: int=None):
@@ -83,6 +90,7 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
+    print(form.__dict__)
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         print(f'Login user {user}')
