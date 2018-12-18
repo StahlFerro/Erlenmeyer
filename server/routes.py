@@ -4,7 +4,7 @@ from flask import request, render_template, redirect, jsonify, flash, url_for, a
 
 from server import app, db, session
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
-from server.forms import LoginForm, EngineForm
+from server.forms import LoginForm, EngineForm, BuilderForm
 from server.models import User
 from server.utils.orm import format_headers, get_web_columns, get_json_data
 from server.utils.url import is_safe_url
@@ -63,15 +63,40 @@ def engine(engine_id: int=None):
     engine_cols = get_web_columns(Engine)
     cap_headers = format_headers(engine_cols)
     engine_data = get_json_data(model=Engine, columns=engine_cols, id=engine_id)
+    authenticated = current_user.is_authenticated
     return render_template('registry.html', title='Engines', headers=engine_cols, data=engine_data,
-                           cap_headers=cap_headers, index=1)
+                           cap_headers=cap_headers, index=1, authenticated=authenticated)
 
 
 @app.route('/index/engine/create', methods=['GET', 'POST'])
 def engine_create():
     form = EngineForm()
     print(form.__dict__)
-    return render_template('create_engine_test.html', form=form)
+    if form.validate_on_submit():
+        engine = Engine()
+        form.populate_obj(engine)
+        print(engine, engine.code)
+    return render_template('modiform.html', form=form, model_name=Engine.__name__, action='Create')
+
+
+@app.route('/index/engine/update/<int:engine_id>', methods=['GET', 'POST'])
+def engine_edit(engine_id: int = None):
+    engine = Engine.query.get(engine_id)
+    if not engine:
+        return
+    form = EngineForm(obj=engine)
+    print(form.__dict__)
+    if form.validate_on_submit():
+        form.populate_obj(engine)
+        print(engine, engine.code)
+    return render_template('modiform.html', form=form, model_name=Engine.__name__, action='Update')
+
+
+@app.route('/index/builder/create', methods=['GET', 'POST'])
+def builder_create():
+    form = BuilderForm()
+    print(form.__dict__)
+    return render_template('modiform.html', form=form, model_name=Builder.__name__)
 
 
 @app.route('/index/builder', methods=['GET', 'POST'])

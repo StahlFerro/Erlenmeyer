@@ -35,6 +35,8 @@
                 {% for ch in cap_headers %}
                 <th>{{ ch }}</th>
                 {% endfor %}
+                {% if authenticated %}
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
