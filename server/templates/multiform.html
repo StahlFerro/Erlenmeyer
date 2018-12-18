@@ -7,7 +7,7 @@
             <div class="content">
                 <form method="post" action="" novalidate>
                     {{ form.hidden_tag() }}
-                    {% if model_name == "Engine" %}
+                    {% if model_name == "engine" %}
                     <table style="width: 100%">
                         <!--<thead>-->
                             <!--<tr>-->
@@ -63,13 +63,13 @@
                             <tr>
                                 <td colspan="2">
                                     <div class="field has-text-centered">
-                                        <input type="submit" class="input is-primary" value="{{ action }}"/>
+                                        <input type="submit" class="input is-primary" value="{{ operation }}"/>
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    {% elif model_name == "Builder" %}
+                    {% elif model_name == "builder" %}
                     <div class="field">
                         {{ form.name.label(class="label") }}
                         <div class="control">{{ form.name(class="input is_info") }}</div>
