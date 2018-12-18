@@ -21,3 +21,13 @@ def is_list(obj_type):  # Jinja custom test to determine whether a variable is a
         return True
     else:
         return False
+
+
+JINJA_GLOBALS = {
+    'type': type,
+    'enumerate': enumerate,
+}
+
+JINJA_TESTS = {
+    'is_list': is_list,
+}

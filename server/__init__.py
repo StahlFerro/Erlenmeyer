@@ -5,14 +5,13 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from config import Config, is_list
+from config import Config, is_list, JINJA_GLOBALS, JINJA_TESTS
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.jinja_env.tests['is_list'] = is_list
-app.jinja_env.globals['type'] = type
-app.jinja_env.globals['enumerate'] = enumerate
+app.jinja_env.tests.update(JINJA_TESTS)
+app.jinja_env.globals.update(JINJA_GLOBALS)
 api = Api(app)
 jwt = JWTManager(app)
 login = LoginManager(app)
