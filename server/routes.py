@@ -37,6 +37,8 @@ def ship_view(rec_id: int = None):
 
 @app.route('/index/ship/create', methods=['GET', 'POST'])
 def ship_create():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     form = ShipForm()
     print(form.__dict__)
     if form.validate_on_submit():
@@ -48,6 +50,8 @@ def ship_create():
 
 @app.route('/index/ship/update/<int:rec_id>', methods=['GET', 'POST'])
 def ship_update(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     ship = Ship.query.get(rec_id)
     if not ship:
         return
@@ -63,6 +67,8 @@ def ship_update(rec_id: int = None):
 
 @app.route('/index/ship/delete/<int:rec_id>', methods=['GET', 'POST'])
 def ship_delete(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     ship = Ship.query.get(rec_id)
     if not ship:
         return
@@ -87,6 +93,8 @@ def ship_type_view(rec_id: int = None):
 
 @app.route('/index/ship_type/create', methods=['GET', 'POST'])
 def ship_type_create():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     form = ShipTypeForm()
     print(form.__dict__)
     if form.validate_on_submit():
@@ -98,6 +106,8 @@ def ship_type_create():
 
 @app.route('/index/ship_type/update/<int:rec_id>', methods=['GET', 'POST'])
 def ship_type_update(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     ship_type = ShipType.query.get(rec_id)
     if not ship_type:
         return
@@ -113,6 +123,8 @@ def ship_type_update(rec_id: int = None):
 
 @app.route('/index/ship_type/delete/<int:rec_id>', methods=['GET', 'POST'])
 def ship_type_delete(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     ship_type = ShipType.query.get(rec_id)
     if not ship_type:
         return
@@ -136,6 +148,8 @@ def ship_status_view(rec_id: int = None):
 
 @app.route('/index/ship_status/create', methods=['GET', 'POST'])
 def ship_status_create():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     form = ShipStatusForm()
     print(form.__dict__)
     if form.validate_on_submit():
@@ -147,6 +161,8 @@ def ship_status_create():
 
 @app.route('/index/ship_status/update/<int:rec_id>', methods=['GET', 'POST'])
 def ship_status_update(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     ship_status = ShipStatus.query.get(rec_id)
     if not ship_status:
         return
@@ -162,6 +178,8 @@ def ship_status_update(rec_id: int = None):
 
 @app.route('/index/ship_status/delete/<int:rec_id>', methods=['GET', 'POST'])
 def ship_status_delete(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     ship_status = ShipStatus.query.get(rec_id)
     if not ship_status:
         return
@@ -184,6 +202,8 @@ def engine_view(rec_id: int = None):
 
 @app.route('/index/engine/create', methods=['GET', 'POST'])
 def engine_create():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     form = EngineForm()
     print(form.__dict__)
     if form.validate_on_submit():
@@ -195,6 +215,8 @@ def engine_create():
 
 @app.route('/index/engine/update/<int:rec_id>', methods=['GET', 'POST'])
 def engine_update(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     engine = Engine.query.get(rec_id)
     if not engine:
         return
@@ -210,6 +232,8 @@ def engine_update(rec_id: int = None):
 
 @app.route('/index/engine/delete/<int:rec_id>', methods=['GET', 'POST'])
 def engine_delete(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     engine = Engine.query.get(rec_id)
     if not engine:
         return
@@ -232,6 +256,8 @@ def builder_view(rec_id: int = None):
 
 @app.route('/index/builder/create', methods=['GET', 'POST'])
 def builder_create():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     form = BuilderForm()
     print(form.__dict__)
     return render_template('multiform.html', form=form, model_name='builder', operation='Create')
@@ -239,6 +265,8 @@ def builder_create():
 
 @app.route('/index/builder/update/<int:rec_id>', methods=['GET', 'POST'])
 def builder_update(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     builder = Builder.query.get(rec_id)
     if not builder:
         return
@@ -254,6 +282,8 @@ def builder_update(rec_id: int = None):
 
 @app.route('/index/builder/delete/<int:rec_id>', methods=['GET', 'POST'])
 def builder_delete(rec_id: int = None):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     builder = Builder.query.get(rec_id)
     if not builder:
         return
