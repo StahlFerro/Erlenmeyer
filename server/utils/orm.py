@@ -9,7 +9,7 @@ from flask_sqlalchemy import inspect, orm, DefaultMeta
 def get_web_columns(model) -> List[str]:
     mapper: orm.mapper = inspect(model)
     columns = [col.key for col in mapper.attrs if ('_id' not in col.key and '_ids' not in col.key)]
-    columns.remove('id')
+    # columns.remove('id')  # Id is needed for url endpoints
     print('columns', columns)
     return columns
 
@@ -119,8 +119,8 @@ def format_headers(headers: list = None):
         h: str = h
         if '_' in h:
             h = h.replace('_', ' ')
-        if 'id' in h:
-            h = h.replace('id', '')
+        # if 'id' in h:
+        #     h = h.replace('id', '')
         h = h.strip()
         h = h.capitalize()
         if h == 'Power output':

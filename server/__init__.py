@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.jinja_env.tests['is_list'] = is_list
 app.jinja_env.globals['type'] = type
+app.jinja_env.globals['enumerate'] = enumerate
 api = Api(app)
 jwt = JWTManager(app)
 login = LoginManager(app)

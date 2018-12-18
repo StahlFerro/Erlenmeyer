@@ -9,57 +9,65 @@
                     {{ form.hidden_tag() }}
                     {% if model_name == "Engine" %}
                     <table style="width: 100%">
-                        <tr>
-                            <td style="width:30%"><strong>Name</strong></td>
-                            <td>
-                                <div class="field">
-                                    <div class="control">{{ form.name(class="input is_info") }}</div>
-                                    {% if form.name.errors %}
-                                    <p class="help is-danger">{{ '\n'.join(form.name.errors) }}</p>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:30%"><strong>Code</strong></td>
-                            <td>
-                                <div class="field">
-                                    <div class="control">{{ form.code(class="input is_info") }}</div>
-                                    {% if form.code.errors %}
-                                    <p class="help is-danger">{{ '\n'.join(form.code.errors) }}</p>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:30%"><strong>Power Output (kWh)</strong></td>
-                            <td>
-                                <div class="field">
-                                    <div class="control">{{ form.power_output(class="input is_info") }}</div>
-                                    {% if form.power_output.errors %}
-                                    <p class="help is-danger">{{ '\n'.join(form.power_output.errors) }}</p>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:30%"><strong>Type</strong></td>
-                            <td>
-                                <div class="field">
-                                    <div class="control">{{ form.type(class="input is_info") }}</div>
-                                    {% if form.type.errors %}
-                                    <p class="help is-danger">{{ '\n'.join(form.type.errors) }}</p>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div class="field has-text-centered">
-                                    <input type="submit" class="input is-primary" value="{{ action }}"/>
-                                </div>
-                            </td>
-                        </tr>
+                        <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<td style="width: 30%"></td>-->
+                                <!--<td style="width: 70%"></td>-->
+                            <!--</tr>-->
+                        <!--</thead>-->
+                        <tbody>
+                            <tr>
+                                <td style="width:30%"><strong>Name</strong></td>
+                                <td>
+                                    <div class="field">
+                                        <div class="control">{{ form.name(class="input is_info") }}</div>
+                                        {% if form.name.errors %}
+                                        <p class="help is-danger">{{ '\n'.join(form.name.errors) }}</p>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code</strong></td>
+                                <td>
+                                    <div class="field">
+                                        <div class="control">{{ form.code(class="input is_info") }}</div>
+                                        {% if form.code.errors %}
+                                        <p class="help is-danger">{{ '\n'.join(form.code.errors) }}</p>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Power Output (kWh)</strong></td>
+                                <td>
+                                    <div class="field">
+                                        <div class="control">{{ form.power_output(class="input is_info") }}</div>
+                                        {% if form.power_output.errors %}
+                                        <p class="help is-danger">{{ '\n'.join(form.power_output.errors) }}</p>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Type</strong></td>
+                                <td>
+                                    <div class="field">
+                                        <div class="control">{{ form.type(class="input is_info") }}</div>
+                                        {% if form.type.errors %}
+                                        <p class="help is-danger">{{ '\n'.join(form.type.errors) }}</p>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="field has-text-centered">
+                                        <input type="submit" class="input is-primary" value="{{ action }}"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                     {% elif model_name == "Builder" %}
                     <div class="field">

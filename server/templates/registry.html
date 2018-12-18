@@ -12,38 +12,39 @@
             <!--</div>-->
 
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('ship') }}">Ships</a>
+                <a class="button" href="{{ url_for('ship_view') }}">Ships</a>
             </div>
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('ship_type') }}">Ship Types</a>
+                <a class="button" href="{{ url_for('ship_type_view') }}">Ship Types</a>
             </div>
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('ship_status') }}">Ship Statuses</a>
+                <a class="button" href="{{ url_for('ship_status_view') }}">Ship Statuses</a>
             </div>
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('engine') }}">Engines</a>
+                <a class="button" href="{{ url_for('engine_view') }}">Engines</a>
             </div>
             <div class="level-item has-text-centered">
-                <a class="button" href="{{ url_for('builder') }}">Builders</a>
+                <a class="button" href="{{ url_for('builder_view') }}">Builders</a>
             </div>
         </nav>
         <p>This is a {{ is_login }} app for testing purposes only</p>
-        <table class="table" border="1px solid black">
+        <table class="table" border="1px solid black" style="width:100%">
             <thead>
             <tr>
                 <th>No</th>
-                {% for ch in cap_headers %}
+                {% for ch in cap_headers if ch != 'Id' %}
                 <th>{{ ch }}</th>
                 {% endfor %}
                 {% if authenticated %}
-                <th>Action</th>
+                <th style="width:12%">Action</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
-            {% for d in data %}
+            {% for counter, d in enumerate(data, 1) %}
             <tr>
-                <td>{{ d['index'] }}</td>
-                {% for h in headers %}
+                <td>{{ counter }}</td>
+                {% for h in headers if h != 'id' %}
                 <td>
                     {% if type(d[h]) is is_list %}
                     <a href="{{ d[h][1] }}">{{ d[h][0] }}</a>
@@ -52,6 +53,12 @@
                     {% endif %}
                 </td>
                 {% endfor %}
+                {% if authenticated %}
+                <td>
+                    <a class="button is-info" href="{{ url_for(model_name + '_update', rec_id=d['id']) }}">Update</a>
+                    <a class="button is-danger" href="{{ url_for(model_name + '_delete', rec_id=d['id']) }}">Delete</a>
+                </td>
+                {% endif %}
             </tr>
             {% endfor %}
             </tbody>

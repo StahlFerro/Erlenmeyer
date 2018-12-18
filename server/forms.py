@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 from wtforms_alchemy import model_form_factory
 
 from server import db
-from server.models import Engine, Builder, ShipType, ShipStatus
+from server.models import Ship, Engine, Builder, ShipType, ShipStatus
 
 
 BaseModelForm = model_form_factory(FlaskForm)
@@ -20,6 +20,11 @@ class LoginForm(ModelForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
+
+
+class ShipForm(ModelForm):
+    class Meta:
+        model = Ship
 
 
 class EngineForm(ModelForm):
