@@ -27,7 +27,6 @@
                 <a class="button" href="{{ url_for('builder_view') }}">Builders</a>
             </div>
         </nav>
-        <p>This is a {{ is_login }} app for testing purposes only</p>
         <p>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
