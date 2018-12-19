@@ -47,7 +47,7 @@
                 <th>{{ ch }}</th>
                 {% endfor %}
                 {% if authenticated %}
-                <th style="width:12%">Action</th>
+                <th style="width:15%">Action</th>
                 {% endif %}
             </tr>
             </thead>
@@ -67,7 +67,10 @@
                 {% if authenticated %}
                 <td>
                     <a class="button is-info" href="{{ url_for(model_name + '_update', rec_id=d['id']) }}">
-                        Update
+                        <span class="icon is-small">
+                          <i class="fas fa-pen"></i>
+                        </span>
+                        <span>Update</span>
                     </a>
                     <a class="button is-danger" href="{{ url_for(model_name + '_delete', rec_id=d['id']) }}">
                         <span>Delete</span>
