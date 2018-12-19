@@ -32,11 +32,12 @@
             {% if messages %}
             <ul>
                 {% for msg in messages %}
-                <li><p class="help {{ msg[0] }}">{{ msg[1] }}</p></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
+                <li>
+        <p class="help {{ msg[0] }}">{{ msg[1] }}</p></li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         </p>
         <table class="table" border="1px solid black" style="width:100%">
             <thead>
@@ -65,8 +66,15 @@
                 {% endfor %}
                 {% if authenticated %}
                 <td>
-                    <a class="button is-info" href="{{ url_for(model_name + '_update', rec_id=d['id']) }}">Update</a>
-                    <a class="button is-danger" href="{{ url_for(model_name + '_delete', rec_id=d['id']) }}">Delete</a>
+                    <a class="button is-info" href="{{ url_for(model_name + '_update', rec_id=d['id']) }}">
+                        Update
+                    </a>
+                    <a class="button is-danger" href="{{ url_for(model_name + '_delete', rec_id=d['id']) }}">
+                        <span>Delete</span>
+                        <span class="icon is-small">
+                          <i class="fas fa-times"></i>
+                        </span>
+                    </a>
                 </td>
                 {% endif %}
             </tr>
