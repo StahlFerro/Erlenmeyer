@@ -35,10 +35,10 @@ Apply all the migrations to generate the database's tables
 ```
 flask db upgrade
 ```
-Insert all the data from `data.sql`
+Insert all the data from `queries/data.sql`
 ```
 psql IMVR_DATA postgres
-\i data.sql
+\i queries/data.sql
 ```
 Run the app
 ```
@@ -51,13 +51,14 @@ curl -i http://localhost:5000/api/ships -X GET
 
 ## Built With
 
-* [Python](https://www.python.org/) - Language
-* [Flask](http://flask.pocoo.org/) - Web framework
-* [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/) - Object-Relational Mapper (ORM)
-* [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/) - REST API library
-* [PostgreSQL](https://www.postgresql.org/) - Database
-* [Jinja2](http://jinja.pocoo.org/docs/2.10/) - Web templating engine (packaged together with Flask)
-* [Cerberus](http://docs.python-cerberus.org/en/stable/index.html) - Request validation
+* [Python](https://www.python.org/) : Language
+* [Flask](http://flask.pocoo.org/) : Web framework
+* [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/) : Object-Relational Mapper (ORM)
+* [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/) : REST API library
+* [Flask-WTF](https://flask-wtf.readthedocs.io/en/stable/) + [WTForms-Alchemy](https://wtforms-alchemy.readthedocs.io/en/latest/) : Form rendering & validation 
+* [PostgreSQL](https://www.postgresql.org/) : Database
+* [Jinja2](http://jinja.pocoo.org/docs/2.10/) : Web templating engine (packaged together with Flask)
+* [Cerberus](http://docs.python-cerberus.org/en/stable/index.html) : Request validation
 
 ## License
 
