@@ -8,6 +8,7 @@ from server.forms import LoginForm, ShipForm, ShipTypeForm, ShipStatusForm, Engi
 from server.models import User
 from server.utils.orm import format_headers, get_web_columns, get_json_data
 from server.utils.url import is_safe_url
+from server.utils.web_controller import view_records, create_records, update_records, delete_records
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -24,15 +25,10 @@ def index():
 @app.route('/index/ship', methods=['GET', 'POST'])
 @app.route('/index/ship/<int:rec_id>')
 def ship_view(rec_id: int = None):
-    model = Ship
-    print('ships called with id:', rec_id or 'none')
-    ship_cols = get_web_columns(model)
-    cap_headers = format_headers(ship_cols)
-    ship_data = get_json_data(model=model, columns=ship_cols, id=rec_id)
-    print('ship data', ship_data)
+    data, headers, cap_headers = view_records(Ship, rec_id)
     authenticated = current_user.is_authenticated
-    return render_template('registry.html', title='Ships', headers=ship_cols, data=ship_data,
-                           cap_headers=cap_headers, authenticated=authenticated, model_name='ship')
+    return render_template('registry.html', title='Ships', data=data, headers=headers, cap_headers=cap_headers,
+                           authenticated=authenticated, model_name='ship')
 
 
 @app.route('/index/ship/create', methods=['GET', 'POST'])
@@ -42,9 +38,10 @@ def ship_create():
     form = ShipForm()
     print(form.__dict__)
     if form.validate_on_submit():
-        ship = Ship()
-        form.populate_obj(ship)
-        print(ship, ship.code)
+        success, msg = create_records(Ship, form)
+        flash(msg)
+        if success:
+            return redirect(url_for('ship_view'))
     return render_template('multiform.html', form=form, model_name='ship', operation='Create')
 
 
@@ -58,9 +55,8 @@ def ship_update(rec_id: int = None):
     form = ShipForm(obj=ship)
     print(form.__dict__)
     if form.validate_on_submit():
-        form.populate_obj(ship)
-        print(ship, ship.code)
-        session.commit()
+        status, msg = update_records(ship, form)
+        flash(msg)
         return redirect(url_for('ship_view'))
     return render_template('multiform.html', form=form, model_name='ship', operation='Update')
 
@@ -72,23 +68,18 @@ def ship_delete(rec_id: int = None):
     ship = Ship.query.get(rec_id)
     if not ship:
         return
-    session.delete(ship)
-    session.commit()
+    success, msg = delete_records(ship)
+    flash(msg)
     return redirect(url_for('ship_view'))
 
 
 @app.route('/index/ship_type', methods=['GET', 'POST'])
 @app.route('/index/ship_type/<int:rec_id>')
 def ship_type_view(rec_id: int = None):
-    model = ShipType
-    print('ship types called with id:', rec_id or 'none')
-    stype_cols = get_web_columns(model)
-    cap_headers = format_headers(stype_cols)
-    stype_data = get_json_data(model=model, columns=stype_cols, id=rec_id)
-    print('ship type data', stype_data)
+    data, headers, cap_headers = view_records(ShipType, rec_id)
     authenticated = current_user.is_authenticated
-    return render_template('registry.html', title='Ship Types', headers=stype_cols, data=stype_data,
-                           cap_headers=cap_headers, authenticated=authenticated, model_name='ship_type')
+    return render_template('registry.html', title='Ship Types', data=data, headers=headers, cap_headers=cap_headers,
+                           authenticated=authenticated, model_name='ship_type')
 
 
 @app.route('/index/ship_type/create', methods=['GET', 'POST'])
@@ -98,9 +89,10 @@ def ship_type_create():
     form = ShipTypeForm()
     print(form.__dict__)
     if form.validate_on_submit():
-        ship_type = ShipType()
-        form.populate_obj(ship_type)
-        print(ship_type, ship_type.code)
+        success, msg = create_records(ShipType, form)
+        flash(msg)
+        if success:
+            return redirect(url_for('ship_type_view'))
     return render_template('multiform.html', form=form, model_name='ship_type', operation='Create')
 
 
@@ -114,9 +106,8 @@ def ship_type_update(rec_id: int = None):
     form = ShipTypeForm(obj=ship_type)
     print(form.__dict__)
     if form.validate_on_submit():
-        form.populate_obj(ship_type)
-        print(ship_type, ship_type.code)
-        session.commit()
+        status, msg = update_records(ship_type, form)
+        flash(msg)
         return redirect(url_for('ship_type_view'))
     return render_template('multiform.html', form=form, model_name='ship_type', operation='Update')
 
@@ -128,22 +119,18 @@ def ship_type_delete(rec_id: int = None):
     ship_type = ShipType.query.get(rec_id)
     if not ship_type:
         return
-    session.delete(ship_type)
-    session.commit()
+    success, msg = delete_records(ship_type)
+    flash(msg)
     return redirect(url_for('ship_type_view'))
 
 
 @app.route('/index/ship_status', methods=['GET', 'POST'])
 @app.route('/index/ship_status/<int:rec_id>')
 def ship_status_view(rec_id: int = None):
-    print('ship types called with id:', rec_id or 'none')
-    stat_cols = get_web_columns(ShipStatus)
-    cap_headers = format_headers(stat_cols)
-    stat_data = get_json_data(model=ShipStatus, columns=stat_cols, id=rec_id)
-    print('ship type data', stat_data)
+    data, headers, cap_headers = view_records(ShipStatus, rec_id)
     authenticated = current_user.is_authenticated
-    return render_template('registry.html', title='Ship Statuses', headers=stat_cols, data=stat_data,
-                           cap_headers=cap_headers, authenticated=authenticated, model_name='ship_status')
+    return render_template('registry.html', title='Ship Statuses', data=data, headers=headers, cap_headers=cap_headers,
+                           authenticated=authenticated, model_name='ship_status')
 
 
 @app.route('/index/ship_status/create', methods=['GET', 'POST'])
@@ -153,9 +140,10 @@ def ship_status_create():
     form = ShipStatusForm()
     print(form.__dict__)
     if form.validate_on_submit():
-        ship_status = ShipStatus()
-        form.populate_obj(ship_status)
-        print(ship_status, ship_status.code)
+        success, msg = create_records(ShipStatus, form)
+        flash(msg)
+        if success:
+            return redirect(url_for('ship_status_view'))
     return render_template('multiform.html', form=form, model_name='ship_status', operation='Create')
 
 
@@ -169,9 +157,8 @@ def ship_status_update(rec_id: int = None):
     form = ShipStatusForm(obj=ship_status)
     print(form.__dict__)
     if form.validate_on_submit():
-        form.populate_obj(ship_status)
-        print(ship_status, ship_status.code)
-        session.commit()
+        status, msg = update_records(ship_status, form)
+        flash(msg)
         return redirect(url_for('ship_status_view'))
     return render_template('multiform.html', form=form, model_name='ship_status', operation='Update')
 
@@ -183,21 +170,18 @@ def ship_status_delete(rec_id: int = None):
     ship_status = ShipStatus.query.get(rec_id)
     if not ship_status:
         return
-    session.delete(ship_status)
-    session.commit()
+    success, msg = delete_records(ship_status)
+    flash(msg)
     return redirect(url_for('ship_status_view'))
 
 
 @app.route('/index/engine', methods=['GET', 'POST'])
 @app.route('/index/engine/<int:rec_id>', methods=['GET', 'POST'])
 def engine_view(rec_id: int = None):
-    model = Engine
-    engine_cols = get_web_columns(model)
-    cap_headers = format_headers(engine_cols)
-    engine_data = get_json_data(model=model, columns=engine_cols, id=rec_id)
+    data, headers, cap_headers = view_records(Engine, rec_id)
     authenticated = current_user.is_authenticated
-    return render_template('registry.html', title='Engines', headers=engine_cols, data=engine_data,
-                           cap_headers=cap_headers, authenticated=authenticated, model_name='engine')
+    return render_template('registry.html', title='Engines', data=data, headers=headers, cap_headers=cap_headers,
+                           authenticated=authenticated, model_name='engine')
 
 
 @app.route('/index/engine/create', methods=['GET', 'POST'])
@@ -205,11 +189,11 @@ def engine_create():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
     form = EngineForm()
-    print(form.__dict__)
     if form.validate_on_submit():
-        engine = Engine()
-        form.populate_obj(engine)
-        print(engine, engine.code)
+        success, msg = create_records(Engine, form)
+        flash(msg)
+        if success:
+            return redirect(url_for('engine_view'))
     return render_template('multiform.html', form=form, model_name='engine', operation='Create')
 
 
@@ -221,11 +205,9 @@ def engine_update(rec_id: int = None):
     if not engine:
         return
     form = EngineForm(obj=engine)
-    print(form.__dict__)
     if form.validate_on_submit():
-        form.populate_obj(engine)
-        print(engine, engine.code)
-        session.commit()
+        status, msg = update_records(engine, form)
+        flash(msg)
         return redirect(url_for('engine_view'))
     return render_template('multiform.html', form=form, model_name='engine', operation='Update')
 
@@ -237,21 +219,18 @@ def engine_delete(rec_id: int = None):
     engine = Engine.query.get(rec_id)
     if not engine:
         return
-    session.delete(engine)
-    session.commit()
+    success, msg = delete_records(engine)
+    flash(msg)
     return redirect(url_for('engine_view'))
 
 
 @app.route('/index/builder', methods=['GET', 'POST'])
 @app.route('/index/builder/<int:rec_id>', methods=['GET', 'POST'])
 def builder_view(rec_id: int = None):
-    model = Builder
-    builder_cols = get_web_columns(model)
-    cap_headers = format_headers(builder_cols)
-    builder_data = get_json_data(model=model, columns=builder_cols, id=rec_id)
+    data, headers, cap_headers = view_records(Builder, rec_id)
     authenticated = current_user.is_authenticated
-    return render_template('registry.html', title='Builders', headers=builder_cols, data=builder_data,
-                           cap_headers=cap_headers, authenticated=authenticated, model_name='builder')
+    return render_template('registry.html', title='Builders', data=data, headers=headers, cap_headers=cap_headers,
+                           authenticated=authenticated, model_name='builder')
 
 
 @app.route('/index/builder/create', methods=['GET', 'POST'])
@@ -259,7 +238,11 @@ def builder_create():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
     form = BuilderForm()
-    print(form.__dict__)
+    if form.validate_on_submit():
+        success, msg = create_records(Builder, form)
+        flash(msg)
+        if success:
+            return redirect(url_for('builder_view'))
     return render_template('multiform.html', form=form, model_name='builder', operation='Create')
 
 
@@ -273,9 +256,8 @@ def builder_update(rec_id: int = None):
     form = BuilderForm(obj=builder)
     print(form.__dict__)
     if form.validate_on_submit():
-        form.populate_obj(builder)
-        print(builder, builder.code)
-        session.commit()
+        status, msg = update_records(builder, form)
+        flash(msg)
         return redirect(url_for('builder_view'))
     return render_template('multiform.html', form=form, model_name='builder', operation='Update')
 
@@ -287,8 +269,8 @@ def builder_delete(rec_id: int = None):
     builder = Builder.query.get(rec_id)
     if not builder:
         return
-    session.delete(builder)
-    session.commit()
+    success, msg = delete_records(builder)
+    flash(msg)
     return redirect(url_for('builder_view'))
 
 

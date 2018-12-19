@@ -28,6 +28,17 @@
             </div>
         </nav>
         <p>This is a {{ is_login }} app for testing purposes only</p>
+        <p>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for msg in messages %}
+                <li><p class="help {{ msg[0] }}">{{ msg[1] }}</p></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </p>
         <table class="table" border="1px solid black" style="width:100%">
             <thead>
             <tr>

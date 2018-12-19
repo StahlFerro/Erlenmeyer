@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, jwt_refresh_token_required, get_jwt
 
 from server import api
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder, User, RevokedToken
-from server.utils.transaction import get_records, create_records, update_records, delete_record
+from server.utils.api_controller import get_records, create_records, update_records, delete_record
 # from server.utils.token import user_from_secret, reset_client_secret, generate_access_token, generate_refresh_token
 
 
