@@ -26,11 +26,11 @@ def get_schema(model, exclude_id=False) -> Dict[str, Dict[str, Any]]:
     return schema
 
 
-def validate_request(request, schema: dict) -> (bool, dict):
+def validate_request(request, schema: dict, update=False) -> (bool, dict):
     v = Validator()
     if type(request) is not dict:
         return False, {"InvalidJSON": "A list of objects should be passed"}
-    is_valid = v.validate(request, schema)
+    is_valid = v.validate(request, schema, update=update)
     errors = v.errors
     if errors:
         print(f'Cerberus request bork!')
