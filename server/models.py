@@ -16,6 +16,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(20), index=True, unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     client_secret = db.Column(db.String(128))
+    token_hash = db.Column(db.String(128))
 
     def __init__(self):
         self.client_secret = secrets.token_urlsafe(64)
@@ -30,7 +31,12 @@ class User(UserMixin, db.Model):
         return argon2.verify(password, self.password_hash)
 
     def generate_access_token(self) -> str:
-        return create_access_token(self.client_secret, expires_delta=timedelta(days=1))
+        token = create_access_token(self.client_secret, expires_delta=timedelta(days=1))
+        self.token_hash = argon2.using(salt_len=40, rounds=4).hash(token)
+        print('token generated', token)
+        print('token hashed', self.token_hash)
+        db.session.commit()
+        return token
 
     def generate_refresh_token(self) -> str:
         return create_refresh_token(self.client_secret, expires_delta=timedelta(days=1))
@@ -70,6 +76,7 @@ class RevokedToken(db.Model):
 @jwt.token_in_blacklist_loader
 def check_if_token_blacklisted(decrypted_token):
     print('-------{}{}{} DECRYPTED TOKEN {}{}{}-------')
+    print(decrypted_token)
     token = decrypted_token['jti']
     pprint(token)
     return RevokedToken.is_blacklisted(token)
