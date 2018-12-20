@@ -5,7 +5,8 @@ import secrets
 
 from passlib.hash import argon2
 from flask_login import UserMixin
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, get_raw_jwt, get_csrf_token
+from flask import request
 
 
 from server import db, login, jwt
@@ -40,6 +41,9 @@ class User(UserMixin, db.Model):
 
     def generate_refresh_token(self) -> str:
         return create_refresh_token(self.client_secret, expires_delta=timedelta(days=1))
+
+    def check_token_hash(self, token: str) -> bool:
+        return argon2.verify(token, self.token_hash)
 
     def generate_dual_tokens(self) -> (str, str):
         return self.generate_access_token(), self.generate_refresh_token()
@@ -77,9 +81,22 @@ class RevokedToken(db.Model):
 def check_if_token_blacklisted(decrypted_token):
     print('-------{}{}{} DECRYPTED TOKEN {}{}{}-------')
     print(decrypted_token)
-    token = decrypted_token['jti']
-    pprint(token)
-    return RevokedToken.is_blacklisted(token)
+    print(get_raw_jwt())
+    client_secret = decrypted_token['identity']
+    user = User.query.filter_by(client_secret=client_secret).first()
+    print('USER', user)
+    if not user:
+        return False
+    else:
+        auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            return False
+        token = auth_header.replace('Bearer ', '')
+        if not token:
+            return False
+        hash_success = user.check_token_hash(token)
+        print('hash success')
+        return hash_success
 
 
 class ShipType(db.Model):
