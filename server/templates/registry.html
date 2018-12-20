@@ -27,18 +27,27 @@
                 <a class="button" href="{{ url_for('builder_view') }}">Builders</a>
             </div>
         </nav>
-        <p>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul>
-                {% for msg in messages %}
-                <li>
-        <p class="help {{ msg[0] }}">{{ msg[1] }}</p></li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        </p>
+        <nav class="level is-mobile">
+            <div class="level-left">
+                <div class="level-item has-text-left">
+                    <a class="button is-primary" href="{{ url_for(model_name + '_create') }}">
+                        <span class="icon is-small"><i class="fas fa-plus"></i></span>
+                        <span>Create</span>
+                    </a>
+                </div>
+            </div>
+            <div class="level-right">
+                <div class="level-item has-text-right">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for msg in messages %}
+                    <span class="help {{ msg[0] }}">{{ msg[1] }}; </span>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </nav>
         <table class="table" border="1px solid black" style="width:100%">
             <thead>
             <tr>

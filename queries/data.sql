@@ -59,11 +59,11 @@ INSERT INTO public.engine (name, code, power_output, type) VALUES ('Westinghouse
 -- Data for Name: ship_status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.ship_status ( name, description) VALUES ('Under construction', NULL);
-INSERT INTO public.ship_status ( name, description) VALUES ('Active', NULL);
-INSERT INTO public.ship_status ( name, description) VALUES ('Decommissioned', NULL);
-INSERT INTO public.ship_status ( name, description) VALUES ('Museum', NULL);
-INSERT INTO public.ship_status ( name, description) VALUES ('Scrapped', NULL);
+INSERT INTO public.ship_status (name, description) VALUES ('Under construction', 'The vessel is being developed and is not completed yet');
+INSERT INTO public.ship_status (name, description) VALUES ('Active', 'Currently operating within its service');
+INSERT INTO public.ship_status (name, description) VALUES ('Decommissioned', 'Withdrawn from its active service');
+INSERT INTO public.ship_status (name, description) VALUES ('Museum', 'Vessel permanently stationed and repurposed into a museum');
+INSERT INTO public.ship_status (name, description) VALUES ('Scrapped', 'Disposed or dissasembled for scrap parts');
 
 
 --
@@ -104,9 +104,9 @@ INSERT INTO public.ship_type (name) VALUES ('Tanker');
 -- Data for Name: ship; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('USS Enterprise', 'CV-65', 40, '1961-01-01', 40, 1, NULL, 1, NULL);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('USS Enterprise', 'CV-65', 40, '1961-01-01', 40, 1, NULL, 1, 1);
 INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Queen Star 3', '9VBQ5', 65, '2016-10-28', 60, NULL, 1, 19, NULL);
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Pegasus V', 'P5STE', 31, '2013-05-12', 12, NULL, NULL, 19, NULL);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Pegasus V', 'P5STE', 31, '2013-05-12', 12, NULL, NULL, 19, 2);
 
 
 --

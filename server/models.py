@@ -77,21 +77,21 @@ def check_if_token_blacklisted(decrypted_token):
 
 class ShipType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), index=True)
+    name = db.Column(db.String(40), index=True, nullable=False)
     ship_ids = db.relationship('Ship', backref='ship_type', lazy='dynamic')
 
     def __repr__(self):
-        return f"<ShipType [{self.name}]>"
+        return f"{self.name}"
 
 
 class ShipStatus(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), index=True)
+    name = db.Column(db.String(40), index=True, nullable=False)
     description = db.Column(db.String(150))
     ship_ids = db.relationship('Ship', backref='ship_status', lazy='dynamic')
 
     def __repr__(self):
-        return f"<ShipStatus [{self.name}]>"
+        return f"{self.name}"
 
 
 class Ship(db.Model):
@@ -107,7 +107,7 @@ class Ship(db.Model):
     ship_status_id = db.Column(db.Integer, db.ForeignKey('ship_status.id'))
 
     def __repr__(self):
-        return f"<Ship [{self.code}] {self.name}>"
+        return f"[{self.code}] {self.name}"
 
 
 class Engine(db.Model):
@@ -119,7 +119,7 @@ class Engine(db.Model):
     ship_ids = db.relationship('Ship', backref='engine', lazy='dynamic')
 
     def __repr__(self):
-        return f"<Engine [{self.code}] {self.name}>"
+        return f"[{self.code}] {self.name}"
 
 
 class Builder(db.Model):
@@ -132,7 +132,7 @@ class Builder(db.Model):
     ship_ids = db.relationship('Ship', backref='builder', lazy='dynamic')
 
     def __repr__(self):
-        return f"<Builder [{self.code}] {self.name}>"
+        return f"[{self.code}] {self.name}"
 
 
 print(__name__)

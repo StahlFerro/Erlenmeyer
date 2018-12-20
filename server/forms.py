@@ -1,11 +1,10 @@
 from flask_wtf import FlaskForm, Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
-from wtforms_alchemy import model_form_factory
+from wtforms_alchemy import model_form_factory, ModelFormField, QuerySelectField, QuerySelectMultipleField
 
 from server import db
 from server.models import Ship, Engine, Builder, ShipType, ShipStatus
-
 
 BaseModelForm = model_form_factory(FlaskForm)
 
@@ -22,9 +21,24 @@ class LoginForm(ModelForm):
     remember_me = BooleanField('Remember Me')
 
 
-class ShipForm(ModelForm):
-    class Meta:
-        model = Ship
+def engine_query():
+    return Engine.query
+
+
+def ship_type_query():
+    return ShipType.query
+
+
+def ship_status_query():
+    return ShipStatus.query
+
+
+def builder_query():
+    return Builder.query
+
+
+def ship_query():
+    return Ship.query
 
 
 class EngineForm(ModelForm):
@@ -45,3 +59,15 @@ class ShipTypeForm(ModelForm):
 class ShipStatusForm(ModelForm):
     class Meta:
         model = ShipStatus
+
+
+class ShipForm(ModelForm):
+    class Meta:
+        model = Ship
+        date_format = '%Y-%m-%d'
+
+    engine = QuerySelectField(query_factory=engine_query, allow_blank=True)
+    builder = QuerySelectField(query_factory=builder_query, allow_blank=True)
+    ship_type = QuerySelectField(query_factory=ship_type_query, allow_blank=True)
+    ship_status = QuerySelectField(query_factory=ship_status_query, allow_blank=True)
+    # ship_type = ModelFormField(ShipTypeForm)
