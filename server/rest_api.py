@@ -5,9 +5,8 @@ from flask_restful import Resource, request
 from flask_jwt_extended import jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt
 
 from server import api
-from server.models import Ship, ShipType, ShipStatus, Engine, Builder, User, RevokedToken
+from server.models import Ship, ShipType, ShipStatus, Engine, Builder, User
 from server.utils.api_controller import get_records, create_records, update_records, delete_record
-# from server.utils.token import user_from_secret, reset_client_secret, generate_access_token, generate_refresh_token
 
 
 class ShipListAPI(Resource):
@@ -201,10 +200,6 @@ class UserDebugAPI(Resource):
         if not user:
             return {"msg": "Token has expired"}, 401
 
-        jti = get_raw_jwt()['jti']
-        old_token = RevokedToken(jti=jti)
-        old_token.add()
-
         new_token = user.generate_access_token()
         return {"access_token": new_token}, 200
 
@@ -215,9 +210,6 @@ class UserDebugAPI(Resource):
             return {"msg": "Token has expired"}, 401
         # user.reset_client_secret()
         pprint(get_raw_jwt())
-        jti = get_raw_jwt()['jti']
-        revoked_token = RevokedToken(jti=jti)
-        revoked_token.add()
         new_token = user.generate_access_token()
         return {
             "message": "Client secret reset, all access and refresh tokens invalidated",

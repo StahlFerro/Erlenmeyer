@@ -30,10 +30,12 @@
         <nav class="level is-mobile">
             <div class="level-left">
                 <div class="level-item has-text-left">
+                    {% if authenticated %}
                     <a class="button is-primary" href="{{ url_for(model_name + '_create') }}">
                         <span class="icon is-small"><i class="fas fa-plus"></i></span>
                         <span>Create</span>
                     </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="level-right">

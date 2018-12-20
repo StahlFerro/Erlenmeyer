@@ -40,7 +40,7 @@ class User(UserMixin, db.Model):
         return token
 
     def generate_refresh_token(self) -> str:
-        return create_refresh_token(self.client_secret, expires_delta=timedelta(days=1))
+        return create_refresh_token(self.client_secret, expires_delta=timedelta(minutes=1))
 
     def check_token_hash(self, token: str) -> bool:
         return argon2.verify(token, self.token_hash)
@@ -59,44 +59,29 @@ class User(UserMixin, db.Model):
 
 
 @login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-
-class RevokedToken(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    jti = db.Column(db.String(128), nullable=False)
-
-    def add(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @classmethod
-    def is_blacklisted(cls, jti: str) -> bool:
-        record = cls.query.filter_by(jti=jti).first()
-        return bool(record)
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 @jwt.token_in_blacklist_loader
 def check_if_token_blacklisted(decrypted_token):
-    print('-------{}{}{} DECRYPTED TOKEN {}{}{}-------')
+    print('-------{}{}{} Blacklist loader called {}{}{}-------')
     print(decrypted_token)
     print(get_raw_jwt())
-    client_secret = decrypted_token['identity']
-    user = User.query.filter_by(client_secret=client_secret).first()
+    user = User.from_secret(decrypted_token['identity'])
     print('USER', user)
     if not user:
-        return False
+        return True
     else:
-        auth_header = request.headers.get('Authorization')
-        if not auth_header:
-            return False
-        token = auth_header.replace('Bearer ', '')
+        token = request.headers.get('Authorization').replace('Bearer ', '')
         if not token:
-            return False
+            return True
         hash_success = user.check_token_hash(token)
-        print('hash success')
-        return hash_success
+        print('hash success: ', hash_success)
+        if hash_success:
+            return False  # Hash matched, token is not blacklisted
+        else:
+            return True  # Hash does not match, token is blacklisted
 
 
 class ShipType(db.Model):
