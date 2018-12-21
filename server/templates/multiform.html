@@ -112,6 +112,45 @@
                             </td>
                         </tr>
 
+                        {% elif model_name == "ship_type" %}
+
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.name(class="input is_info") }}</div>
+                                    {% if form.name.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.name.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+
+                        {% elif model_name == "ship_status" %}
+
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.name(class="input is_info") }}</div>
+                                    {% if form.name.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.name.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Description</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.description(class="input is_info") }}</div>
+                                    {% if form.description.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.description.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+
                         {% elif model_name == "engine" %}
 
                         <tr>
@@ -160,6 +199,73 @@
                         </tr>
 
                         {% elif model_name == "builder" %}
+
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.name(class="input is_info") }}</div>
+                                    {% if form.name.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.name.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Code</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.code(class="input is_info") }}</div>
+                                    {% if form.code.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.code.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.name(class="input is_info") }}</div>
+                                    {% if form.name.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.name.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date Founded</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.date_founded(class="input is_info") }}</div>
+                                    {% if form.date_founded.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.date_founded.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Founder</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.founder(class="input is_info") }}</div>
+                                    {% if form.founder.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.founder.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Headquarters</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.headquarters(class="input is_info") }}</div>
+                                    {% if form.headquarters.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.headquarters.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
 
                         {% endif %}
 
