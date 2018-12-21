@@ -32,7 +32,7 @@ class User(UserMixin, db.Model):
         return argon2.verify(password, self.password_hash)
 
     def generate_access_token(self) -> str:
-        token = create_access_token(self.client_secret, expires_delta=timedelta(days=1))
+        token = create_access_token(self.client_secret, expires_delta=timedelta(days=30))
         self.token_hash = argon2.using(salt_len=40, rounds=4).hash(token)
         print('token generated', token)
         print('token hashed', self.token_hash)
@@ -40,7 +40,7 @@ class User(UserMixin, db.Model):
         return token
 
     def generate_refresh_token(self) -> str:
-        return create_refresh_token(self.client_secret, expires_delta=timedelta(minutes=1))
+        return create_refresh_token(self.client_secret, expires_delta=timedelta(days=120))
 
     def check_token_hash(self, token: str) -> bool:
         return argon2.verify(token, self.token_hash)
