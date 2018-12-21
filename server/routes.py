@@ -313,4 +313,14 @@ def user_profile():
         return redirect(url_for('login'))
 
 
+@app.route('/user_profile/new_token')
+def new_token_page():
+    if current_user.is_authenticated:
+        user = User.query.get(current_user.id)
+        token = user.generate_access_token()
+        return render_template('new_token.html', token=token)
+    else:
+        return redirect(url_for('login'))
+
+
 print(__name__)

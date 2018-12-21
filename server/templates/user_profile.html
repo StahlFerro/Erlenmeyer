@@ -5,6 +5,7 @@
         <div class="columns is-mobile">
             <div class="column"></div>
             <div class="column">
+                <h1 class="is-size-1 has-text-centered">User Profile</h1>
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
@@ -33,9 +34,18 @@
                         </div>
                     </div>
                     <footer class="card-footer">
-                        <a href="#" class="card-footer-item">Regenerate API Token</a>
-                        <a href="{{ url_for('logout') }}" class="card-footer-item">Delete</a>
-                        <a href="{{ url_for('logout') }}" class="card-footer-item">Logout</a>
+                        <a href="{{ url_for('new_token_page') }}" class="card-footer-item has-text-centered" style="color:green">
+                            <span class="icon is-medium is-danger">
+                                <i class="fas fa-redo-alt"></i>
+                            </span>Regenerate API Token</a>
+                        <a href="{{ url_for('index') }}" class="card-footer-item has-text-centered">
+                            <span class="icon is-medium is-danger">
+                                <i class="fas fa-home"></i>
+                            </span>Homepage</a>
+                        <a href="{{ url_for('logout') }}" class="card-footer-item has-text-centered" style="color:red">
+                            <span class="icon is-medium is-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </span>Logout</a>
                     </footer>
                 </div>
             </div>

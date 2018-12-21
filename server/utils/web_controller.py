@@ -4,7 +4,7 @@ from server.utils.orm import get_web_columns, format_headers, get_json_data
 from server import session
 
 
-css = {"yes": "is-primary", "no": "is-danger"}
+css = {"yes": "is-success", "no": "is-danger"}
 
 
 def view_records(model_class, rec_id:int = None):

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="columns is-mobile">
+            <div class="column"></div>
+            <div class="column">
+                <h1 class="is-size-1 has-text-centered">Your API token</h1>
+                <table class="table" style="width:100%; border:0px;">
+                    <tbody>
+                    <tr>
+                        <td colspan="3" class="borderless-table">
+                            <textarea class="textarea is-info" rows="10" id="token_textarea" readonly>{{ token }}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td style="border:0px; width:40%"></td>
+                        <td style="border:0px; width:10%">
+                            <button class="button is-info" onclick="copy2clipboard()">Copy text</button>
+                        </td>
+                        <td style="border:0px; width:40%" id="status" class="has-text-centered"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="has-text-grey has-text-justified" style="border:0px;">
+                            You have obtained a new token!
+                            Be careful, refreshing or re-opening this page will generate a new token and invalidate the previous one.
+                            Store this somewhere safe before navigating out of this page!
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="has-text-centered" style="border:0px;">
+                            <a href="{{ url_for('user_profile') }}" class="button">Back to User Profile</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="column"></div>
+        </div>
+    </div>
+</section>
+<script>
+    function copy2clipboard(){
+        var text = document.getElementById("token_textarea");
+        text.select();
+        document.execCommand("copy");
+        document.getElementById("status").innerHTML = "Copied!";
+    }
+</script>
+{% endblock %}
