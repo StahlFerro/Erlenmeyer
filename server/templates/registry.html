@@ -3,7 +3,12 @@
 <section class="section">
     <div class="content">
         <h1 class="is-size-1 has-text-centered">{{ title }}</h1>
-        <h4 class="is-size-4 has-text-centered"><a href="{{ url_for('index') }}">Home</a></h4>
+        {% if model_name == 'users' %}
+            <h4 class="is-size-4 has-text-centered"><a href="{{ url_for('user_profile') }}">Back to Profile</a></h4>
+        {% else %}
+            <h4 class="is-size-4 has-text-centered"><a href="{{ url_for('index') }}">Home</a></h4>
+        {% endif %}
+        {% if model_name != 'users' %}
         <nav class="level is-mobile">
             <!--<div class="level-left">-->
             <!--<div class="level-item has-text-centered">-->
@@ -27,6 +32,7 @@
                 <a class="button" href="{{ url_for('builder_view') }}">Builders</a>
             </div>
         </nav>
+        {% endif %}
         <nav class="level is-mobile">
             <div class="level-left">
                 <div class="level-item has-text-left">
@@ -77,18 +83,23 @@
                 {% endfor %}
                 {% if authenticated %}
                 <td>
+                    {% if model_name != 'users' %}
                     <a class="button is-info" href="{{ url_for(model_name + '_update', rec_id=d['id']) }}">
                         <span class="icon is-small">
                           <i class="fas fa-pen"></i>
                         </span>
                         <span>Update</span>
                     </a>
+                    {% endif %}
+
+                    {% if (model_name == 'users' and d['id'] != user.id) or model_name != 'users' %}
                     <a class="button is-danger" href="{{ url_for(model_name + '_delete', rec_id=d['id']) }}">
                         <span>Delete</span>
                         <span class="icon is-small">
                           <i class="fas fa-times"></i>
                         </span>
                     </a>
+                    {% endif %}
                 </td>
                 {% endif %}
             </tr>

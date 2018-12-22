@@ -1,15 +1,16 @@
 from pprint import pprint
 
-from server.utils.orm import get_web_columns, format_headers, get_json_data
 from server import session
+from server.utils.orm import get_web_columns, format_headers, get_json_data
+from server.models import User
 
 
 css = {"yes": "is-success", "no": "is-danger"}
 
 
-def view_records(model_class, rec_id:int = None):
+def view_records(model_class, rec_id:int = None, headers_override=None):
     print('models called with id:', rec_id or 'none')
-    headers = get_web_columns(model_class)
+    headers = get_web_columns(model_class, headers_override=headers_override)
     data = get_json_data(model=model_class, columns=headers, id=rec_id)
     cap_headers = format_headers(headers)
     return data, headers, cap_headers
@@ -18,7 +19,11 @@ def view_records(model_class, rec_id:int = None):
 def create_records(model_class, form):
     new_record = model_class()
     form.populate_obj(new_record)
+    if model_class is User:
+        new_record: User = new_record
+        new_record.set_password(new_record.username)
     try:
+        print(new_record.username, new_record.password_hash)
         session.add(new_record)
         session.commit()
         msg = (css["yes"], f"{new_record} create succeeded")

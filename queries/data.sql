@@ -142,12 +142,12 @@ INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, bu
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."user" (username, password_hash, client_secret)
+INSERT INTO public."user" (username, password_hash, client_secret, is_admin, date_created)
 VALUES ('admin', '$argon2i$v=19$m=102400,t=4,p=8$7b0X4nxvDaH03luL8R7jHOMcQwiBUIrxPmcsJUSoVeqdcy4lZEzJ2Q$7GWdamuppqqQqjBb9m1R+g',
-'TZxzkDo_Cm37NVwczcD0L2BxucvjXhX1XQzAdQA4OwYn_4eD-r80B8WUb4psINhoXUxTtiK2TzQN0WwOlRYWwg');
-INSERT INTO public."user" (username, password_hash, client_secret)
+'TZxzkDo_Cm37NVwczcD0L2BxucvjXhX1XQzAdQA4OwYn_4eD-r80B8WUb4psINhoXUxTtiK2TzQN0WwOlRYWwg', TRUE, (now() at time zone 'utc'));
+INSERT INTO public."user" (username, password_hash, client_secret, is_admin, date_created)
 VALUES ('root', '$argon2i$v=19$m=102400,t=4,p=8$qJWSslbK2ftfi3HOee89hzBmLIWQspaScm7NuVfqHYOwdu4dI0QoxQ$saWPzOm14GtsFiHLvXfbHA',
-'9pJJmF0OC6RlkX0odsEaVW9nxl8Z7eu30aEmf3nWy2fyFRy1Re8d5Bvku1fmwbqcSywK7sFhDlkhc7w14ZH2fw');
+'9pJJmF0OC6RlkX0odsEaVW9nxl8Z7eu30aEmf3nWy2fyFRy1Re8d5Bvku1fmwbqcSywK7sFhDlkhc7w14ZH2fw', TRUE, (now() at time zone 'utc'));
 
 
 --

@@ -19,9 +19,11 @@ class User(UserMixin, db.Model):
     client_secret = db.Column(db.String(128))
     token_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
+    date_created = db.Column(db.DateTime)
+    last_login = db.Column(db.DateTime)
 
     def __init__(self):
-        self.client_secret = secrets.token_urlsafe(64)
+        self.client_secret = secrets.token_urlsafe(64)  # Generate a random string for the client secret
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -31,6 +33,9 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password: str) -> bool:
         return argon2.verify(password, self.password_hash)
+
+    def update_login_date(self):
+        self.last_login = datetime
 
     def generate_access_token(self) -> str:
         token = create_access_token(self.client_secret, expires_delta=timedelta(days=30))

@@ -20,4 +20,4 @@ db = SQLAlchemy(app)
 session = db.session
 migrate = Migrate(app, db)
 
-from server import routes, models, rest_api, utils
+from server import routes, user_routes, models, rest_api, utils

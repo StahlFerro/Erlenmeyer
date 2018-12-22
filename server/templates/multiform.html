@@ -201,7 +201,7 @@
                         {% elif model_name == "builder" %}
 
                         <tr>
-                            <td><strong>Name</strong></td>
+                            <td style="width:30%"><strong>Name</strong></td>
                             <td>
                                 <div class="field">
                                     <div class="control">{{ form.name(class="input is_info") }}</div>
@@ -265,6 +265,35 @@
                                     {% endif %}
                                 </div>
                             </td>
+                        </tr>
+
+                        {% elif model_name == 'users' %}
+
+                        <tr style="width:30%">
+                            <td><strong>Username</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.username(class="input is_info") }}</div>
+                                    {% if form.username.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.username.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="width:30%">
+                            <td><strong>Is Admin</strong></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">{{ form.is_admin(class="is_info") }}</div>
+                                    {% if form.is_admin.errors %}
+                                    <p class="help is-danger">{{ '\n'.join(form.is_admin.errors) }}</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">The user will be created with a password the same as the username.
+                            Remember to remind the user to change the password to a safer one!</td>
                         </tr>
 
                         {% endif %}

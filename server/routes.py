@@ -1,13 +1,12 @@
+from datetime import datetime
+
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user
 from flask import request, render_template, redirect, jsonify, flash, url_for, abort
 
-from server import app, db, session
+from server import app
 from server.models import Ship, ShipType, ShipStatus, Engine, Builder
-from server.forms import LoginForm, ShipForm, ShipTypeForm, ShipStatusForm, EngineForm, BuilderForm
-from server.models import User
-from server.utils.orm import format_headers, get_web_columns, get_json_data
-from server.utils.url import is_safe_url
+from server.forms import ShipForm, ShipTypeForm, ShipStatusForm, EngineForm, BuilderForm
 from server.utils.web_controller import view_records, create_records, update_records, delete_records
 
 
@@ -272,55 +271,6 @@ def builder_delete(rec_id: int = None):
     success, msg = delete_records(builder)
     flash(msg)
     return redirect(url_for('builder_view'))
-
-
-@app.route('/gate', methods=['GET', 'POST'])
-def login():
-    print('gate called')
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = LoginForm()
-    print(form.__dict__)
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        print(f'Login user {user}')
-        if user is None or not user.check_password(form.password.data): # If user does not exist or has wrong username and pass
-            flash('Invalid username or password')
-            return redirect(url_for('login'))
-        else:  # If user exist and has the correct username and pass
-            login_user(user, remember=form.remember_me.data)
-            next_page = request.args.get('next')
-            if not next_page or url_parse(next_page).netloc != '':
-                next_page = url_for('index')
-            if not is_safe_url(next_page):
-                return app.abort(400)
-            print(f'next page: {next_page}')
-            return redirect(next_page)
-    return render_template('gate.html', title='Login', form=form)
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
-
-
-@app.route('/user_profile')
-def user_profile():
-    if current_user.is_authenticated:
-        return render_template('user_profile.html', user=current_user)
-    else:
-        return redirect(url_for('login'))
-
-
-@app.route('/user_profile/new_token')
-def new_token_page():
-    if current_user.is_authenticated:
-        user = User.query.get(current_user.id)
-        token = user.generate_access_token()
-        return render_template('new_token.html', token=token)
-    else:
-        return redirect(url_for('login'))
 
 
 print(__name__)

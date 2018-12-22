@@ -6,11 +6,15 @@ from typing import List, Dict, Any
 from flask_sqlalchemy import inspect, orm, DefaultMeta
 
 
-def get_web_columns(model) -> List[str]:
+def get_web_columns(model, headers_override=None) -> List[str]:
     mapper: orm.mapper = inspect(model)
     columns = [col.key for col in mapper.attrs if ('_id' not in col.key and '_ids' not in col.key)]
     # columns.remove('id')  # Id is needed for url endpoints
     print('columns', columns)
+    if headers_override:
+        if 'id' not in headers_override:
+            headers_override.append('id')
+        columns = headers_override
     return columns
 
 
@@ -105,16 +109,13 @@ def get_json_data(model, columns, id=None, web_api=False) -> List[Dict[str, Any]
     return out_json
 
 
-def format_headers(headers: list = None):
+def format_headers(headers):
     """
     Return a list of column names formatted as headers
     :param headers:
     :return list:
     """
     new_headers = []
-    if not headers:
-        return new_headers
-    print('new headers', headers)
     for h in headers:
         h: str = h
         if '_' in h:
