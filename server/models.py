@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     client_secret = db.Column(db.String(128))
     token_hash = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean, default=False)
 
     def __init__(self):
         self.client_secret = secrets.token_urlsafe(64)
