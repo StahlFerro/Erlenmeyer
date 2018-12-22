@@ -148,7 +148,9 @@ VALUES ('admin', '$argon2i$v=19$m=102400,t=4,p=8$7b0X4nxvDaH03luL8R7jHOMcQwiBUIr
 INSERT INTO public."user" (username, password_hash, client_secret, is_admin, date_created)
 VALUES ('root', '$argon2i$v=19$m=102400,t=4,p=8$qJWSslbK2ftfi3HOee89hzBmLIWQspaScm7NuVfqHYOwdu4dI0QoxQ$saWPzOm14GtsFiHLvXfbHA',
 '9pJJmF0OC6RlkX0odsEaVW9nxl8Z7eu30aEmf3nWy2fyFRy1Re8d5Bvku1fmwbqcSywK7sFhDlkhc7w14ZH2fw', TRUE, (now() at time zone 'utc'));
-
+INSERT INTO public."user" (username, password_hash, client_secret, is_admin, date_created)
+VALUES ('123', '$argon2i$v=19$m=102400,t=4,p=8$lZLSuveecy4l5Hzv/X9vbc2ZkzJGyFnrPUeIsRZCKKUUwpgzhvA+Zw$byHcgN8CyALeTzlxVcPKow',
+'Punk_82l8AGsBDmBsE_CZBPISGZT_idg3yQq1qK1o_HPXYGTo3cpxqejDBGqUWJbqZtB-37SBOuQbhuYKh6I1w', FALSE, (now() at time zone 'utc'));
 
 --
 -- TOC entry 2238 (class 0 OID 0)

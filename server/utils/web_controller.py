@@ -1,3 +1,4 @@
+from datetime import datetime
 from pprint import pprint
 
 from server import session
@@ -22,6 +23,7 @@ def create_records(model_class, form):
     if model_class is User:
         new_record: User = new_record
         new_record.set_password(new_record.username)
+        new_record.date_created = datetime.utcnow()
     try:
         print(new_record.username, new_record.password_hash)
         session.add(new_record)

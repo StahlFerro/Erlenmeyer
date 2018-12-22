@@ -53,7 +53,7 @@ def user_profile():
         return redirect(url_for('login'))
 
 
-@app.route('/user_profile/user_repassword', methods=['GET', 'POST'])
+@app.route('/user_profile/repassword', methods=['GET', 'POST'])
 def user_repassword():
     if current_user.is_authenticated:
         form = UpdatePasswordForm()
