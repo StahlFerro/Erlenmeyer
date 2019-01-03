@@ -23,11 +23,13 @@ SET row_security = off;
 -- Data for Name: builder; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('Kim Seah Shipyard', 'KSSI', '2000-01-22', 'Jimmy Walton', 'Indonesia');
+INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('Penguin International', 'PINGU', '1995-01-22', 'James Tham', 'Singapore');
 INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('Meyer Werft GmBH & Co. KG', 'MWRF', '1795-01-01', 'Willm Rolf Meyer', 'Germany');
 INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('Newport News Shipbuilding', 'NNS', '1886-01-01', 'Collis Potter Huntington', 'United States');
 INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('Kure Naval Arsenal', 'KNA', '1889-01-01', 'Imperial Japanese Navy', 'Japan');
-INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('PT Penataran Angkatan Laut', 'PAL', '1939-01-01', 'Indonesia Ministry of SOEs', 'Indonesia');
+INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('PT Penataran Angkatan Laut', 'PAL', '1939-01-01', 'Indonesian Ministry of SOEs', 'Indonesia');
+INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('Danyard A/S Frederikshavn ', 'DNYA', '1870-01-01', '', 'Denmark');
+INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VALUES ('Hyundai Heavy Industries ', 'HHI', '1972-01-01', 'Chung Ju-yung', 'South Korea');
 
 
 --
@@ -45,10 +47,13 @@ INSERT INTO public.builder (name, code, date_founded, founder, headquarters) VAL
 -- Data for Name: engine; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.engine (name, code, power_output, type) VALUES ('Cummins KTA38-M2', 'KTA38', 1006, 'Diesel');
 INSERT INTO public.engine (name, code, power_output, type) VALUES ('Westinghouse A2W', 'A2W', 150000, 'Nuclear');
 INSERT INTO public.engine (name, code, power_output, type) VALUES ('Kampon Steam Boilers', 'KMP', 110000, 'Steam');
 INSERT INTO public.engine (name, code, power_output, type) VALUES ('Wärtsilä 12V46F', 'WVF', 14400, 'Diesel-Electric');
 INSERT INTO public.engine (name, code, power_output, type) VALUES ('SEMT Pielstick 20PA6B STC', 'SP2S', 8910, 'Diesel-Electric');
+INSERT INTO public.engine (name, code, power_output, type) VALUES ('Deutz V12M SB 628 MWM', 'D12', 8910, 'Diesel');
+INSERT INTO public.engine (name, code, power_output, type) VALUES ('MAN B&W 12S90ME-C', 'MB12S', 69720, 'Diesel');
 
 
 --
@@ -113,12 +118,13 @@ INSERT INTO public.ship_type (name) VALUES ('Tanker');
 -- Data for Name: ship; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('USS Enterprise', 'CV-65', 33.6, '1961-01-01', 40, 1, 3, 1, 4);
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Queen Star 3', '9VBQ5', 39, '2016-10-28', 60, NULL, 1, 19, NULL);
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Pegasus V', 'P5STE', 31, '2013-05-12', 12, NULL, NULL, 19, 2);
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('IJN Yamato', 'YMT', 27, '1940-08-08', 120, 2, 4, 3, 7);
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Anthem of the Seas', 'Q2RCI', 22, '2015-02-21', 4905, 3, 2, 22, 2);
-INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('KRI Raden Eddy Martadinata', 'RE331', 28, '2016-01-18', 35, 4, 5, 11, 2);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('USS Enterprise', 'CV-65', 33.6, '1961-01-01', 40, 2, 3, 1, 4);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Penguin 32', '9V802', 25, '2008-10-28', 206, 1, 1, 19, 2);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Pegasus V', 'P5STE', 17, '2013-05-12', 38, 6, 6, 20, 2);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('IJN Yamato', 'YMT', 27, '1940-08-08', 120, 3, 4, 3, 7);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('Anthem of the Seas', 'Q2RCI', 22, '2015-02-21', 4905, 4, 2, 22, 2);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('KRI Raden Eddy Martadinata', 'RE331', 28, '2016-01-18', 35, 5, 5, 11, 2);
+INSERT INTO public.ship (name, code, speed, launch_date, capacity, engine_id, builder_id, ship_type_id, ship_status_id) VALUES ('MV CSCL Globe', 'CSCLG', 22, '2014-08-23', 63, 7, 7, 23, 2);
 
 
 --
