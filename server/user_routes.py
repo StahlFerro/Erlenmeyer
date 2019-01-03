@@ -94,19 +94,15 @@ def users_view():
 
 @app.route('/users_list/create', methods=['GET', 'POST'])
 def users_create():
-    print('bollocks')
     if current_user.is_authenticated and current_user.is_admin:
         form = UserForm()
-        print('bollocks form')
         if form.validate_on_submit():
-            print('success')
             success, msg = create_records(User, form)
             flash(msg)
             if success:
                 return redirect(url_for('users_view'))
         return render_template('multiform.html', form=form, model_name='users', operation='Create')
     else:
-        print('fail')
         return abort(403)
 
 
@@ -120,7 +116,6 @@ def users_delete(rec_id: int = None):
         flash(msg)
         return redirect(url_for('users_view'))
     else:
-        print('fail')
         return abort(403)
 
 

@@ -71,9 +71,9 @@ def load_user(user_id):
 
 @jwt.token_in_blacklist_loader
 def check_if_token_blacklisted(decrypted_token):
-    print('-------{}{}{} Blacklist loader called {}{}{}-------')
-    print(decrypted_token)
-    print(get_raw_jwt())
+    # print('-------{}{}{} Blacklist loader called {}{}{}-------')
+    # print(decrypted_token)
+    # print(get_raw_jwt())
     user = User.from_secret(decrypted_token['identity'])
     print('USER', user)
     if not user:
