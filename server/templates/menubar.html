@@ -29,7 +29,8 @@
     <div class="hero-body">
         <div class="container has-text-centered">
             <div class="content">
-                <p><h1 class="title is-1 has-text-white">IMVR</h1></p>
+                <p>
+                <h1 class="title is-1 has-text-white">IMVR</h1></p>
             </div>
         </div>
     </div>
@@ -39,28 +40,37 @@
             <nav class="level">
 
                 <div class="level-item">
-                    {% if is_login %}
-                    <a class="button is-info" href="{{ url_for('user_profile') }}">My Profile</a>
-                    {% else %}
-                    <a class="button is-info">Register</a>
-                    {% endif %}
+                    <a class="button is-info" href="https://github.com/StahlFerro/IMVR">
+                        <span class="icon is-medium">
+                            <i class="fab fa-github"></i>
+                        </span>
+                        <span>Github</span>
+                    </a>
                 </div>
 
                 <div class="level-item">
                     <div class="tabs is-fullwidth is-large">
                         <ul>
-                            <li><a href="{{ url_for('ship_view') }}">Ships</a></li>
-                            <li><a href="{{ url_for('engine_view') }}">Engines</a></li>
-                            <li><a href="{{ url_for('builder_view') }}">Builders</a></li>
+                            <li><a href="{{ url_for('ship_view') }}">View Data</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="level-item">
                     {% if is_login %}
-                    <a class="button is-danger" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="button is-primary" href="{{ url_for('user_profile') }}">
+                        <span>Profile</span>
+                        <span class="icon is-medium">
+                            <i class="fas fa-user-circle"></i>
+                        </span>
+                    </a>
                     {% else %}
-                    <a class="button is-primary" href="{{ url_for('login') }}">Login</a>
+                    <a class="button is-primary" href="{{ url_for('login') }}">
+                        <span>Login</span>
+                        <span class="icon is-medium">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </span>
+                    </a>
                     {% endif %}
                 </div>
             </nav>
