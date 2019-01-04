@@ -19,8 +19,8 @@ Create a virtual environment for the project, and then activate it
 cd /path/to/IMVR
 python3.7 -m venv venv
 (Linux bash) source venv/bin/activate
-(Windows powershell) venv\bin\Activate.ps1
-(Windows cmd.exe) venv\bin\activate.bat
+(Windows powershell) venv\Scripts\Activate.ps1
+(Windows cmd.exe) venv\Scripts\activate.bat
 ```
 Install the requirements from the `requirements.txt` file included in the project
 ```
