@@ -34,13 +34,13 @@ def get_schema(model, operation) -> Dict[str, Dict[str, Any]]:
     for col in mapper.columns:
         field = col.key
         ftype = col.type.__visit_name__
-        schema[field] = {}
+
+        if field == 'id' and operation == 'create':
+            continue
+        schema[field] = {'type': ftype}
 
         if field == 'id':
-            if operation == 'create':
-                continue
             schema[field].update({'min': 1})
-        schema[field] = {'type': ftype}
 
         if ftype == 'string':
             schema[field].update({'maxlength': col.type.length})
