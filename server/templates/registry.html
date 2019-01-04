@@ -6,7 +6,13 @@
         {% if model_name == 'users' %}
             <h4 class="is-size-4 has-text-centered"><a href="{{ url_for('user_profile') }}">Back to Profile</a></h4>
         {% else %}
-            <h4 class="is-size-4 has-text-centered"><a href="{{ url_for('index') }}">Home</a></h4>
+            <h4 class="is-size-4 has-text-centered">
+                <a href="{{ url_for('index') }}" class="button is-large">
+                    <span class="icon is-large is-danger">
+                        <i class="fas fa-home"></i>
+                    </span>
+                </a>
+            </h4>
         {% endif %}
         {% if model_name != 'users' %}
         <nav class="level is-mobile">
