@@ -29,7 +29,7 @@ pip install -r requirements.txt
 Create a postgres database named `IMVR_DATA`, either from the command line, or from a GUI like pgAdmin
 ```
 psql -U postgres
-CREATE DATABASE IMVR_DATA
+CREATE DATABASE "IMVR_DATA";
 ```
 Apply all the migrations to generate the database's tables
 ```

@@ -18,7 +18,7 @@ def create_records(model, docs) -> (dict, int):
     if not docs:
         return {"message": "Request body cannot be empty"}, 400
     model_name = model.__name__
-    schema = get_schema(model, exclude_id=True)
+    schema = get_schema(model, operation='create')
     for doc in docs:
         is_valid, errors = validate_request(doc, schema)
         if not is_valid:
@@ -49,10 +49,10 @@ def update_records(model, docs) -> (dict, int):
     if not docs:
         return {"message": "Request body cannot be empty"}, 400
     model_name = model.__name__
-    schema = get_schema(model)
+    schema = get_schema(model, operation='update')
     for doc in docs:
         print('doc', doc)
-        is_valid, errors = validate_request(doc, schema, update=True)
+        is_valid, errors = validate_request(doc, schema)
         if not is_valid:
             return errors, 400
     doc_ids = list(set(doc["id"] for doc in docs))  # Eliminates looping through multiple ids

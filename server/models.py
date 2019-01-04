@@ -49,7 +49,10 @@ class User(UserMixin, db.Model):
         return create_refresh_token(self.client_secret, expires_delta=timedelta(days=120))
 
     def check_token_hash(self, token: str) -> bool:
-        return argon2.verify(token, self.token_hash)
+        if self.token_hash:
+            return argon2.verify(token, self.token_hash)
+        else:
+            return False
 
     def generate_dual_tokens(self) -> (str, str):
         return self.generate_access_token(), self.generate_refresh_token()
