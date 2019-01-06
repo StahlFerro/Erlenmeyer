@@ -8,7 +8,6 @@ from flask_login import UserMixin
 from flask_jwt_extended import create_access_token, create_refresh_token, get_raw_jwt, get_csrf_token
 from flask import request
 
-
 from server import db, login, jwt
 
 

@@ -25,7 +25,6 @@ def create_records(model_class, form):
         new_record.set_password(new_record.username)
         new_record.date_created = datetime.utcnow()
     try:
-        print(new_record.username, new_record.password_hash)
         session.add(new_record)
         session.commit()
         msg = (css["yes"], f"{new_record} create succeeded")

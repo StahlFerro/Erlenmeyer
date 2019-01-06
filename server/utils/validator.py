@@ -39,9 +39,6 @@ def get_schema(model, operation) -> Dict[str, Dict[str, Any]]:
             continue
         schema[field] = {'type': ftype}
 
-        if field == 'id':
-            schema[field].update({'min': 1})
-
         if ftype == 'string':
             schema[field].update({'maxlength': col.type.length})
             if not col.nullable:
