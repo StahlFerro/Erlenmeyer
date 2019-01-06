@@ -34,10 +34,17 @@ def get_schema(model, operation) -> Dict[str, Dict[str, Any]]:
     for col in mapper.columns:
         field = col.key
         ftype = col.type.__visit_name__
+        try:
+            unsigned_attrs = model.unsigned_attrs()
+        except Exception as e:
+            unsigned_attrs = list()
 
         if field == 'id' and operation == 'create':
             continue
         schema[field] = {'type': ftype}
+
+        if unsigned_attrs and field in unsigned_attrs:
+            schema[field] = {'min': 0}
 
         if ftype == 'string':
             schema[field].update({'maxlength': col.type.length})

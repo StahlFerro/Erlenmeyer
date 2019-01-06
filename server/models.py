@@ -126,6 +126,13 @@ class Ship(db.Model):
     def __repr__(self):
         return f"[{self.code}] {self.name}"
 
+    @classmethod
+    def unsigned_attrs(cls):
+        """
+        List of column names that are unsigned integers. A workaround for PostgreSQL's lack of support for UInts
+        """
+        return ['capacity']
+
 
 class Engine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
