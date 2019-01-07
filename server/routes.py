@@ -50,7 +50,7 @@ def ship_update(rec_id: int = None):
         return redirect(url_for('login'))
     ship = Ship.query.get(rec_id)
     if not ship:
-        return
+        abort(404)
     form = ShipForm(obj=ship)
     print(form.__dict__)
     if form.validate_on_submit():
@@ -66,7 +66,7 @@ def ship_delete(rec_id: int = None):
         return redirect(url_for('login'))
     ship = Ship.query.get(rec_id)
     if not ship:
-        return
+        abort(404)
     success, msg = delete_records(ship)
     flash(msg)
     return redirect(url_for('ship_view'))
@@ -101,7 +101,7 @@ def ship_type_update(rec_id: int = None):
         return redirect(url_for('login'))
     ship_type = ShipType.query.get(rec_id)
     if not ship_type:
-        return
+        abort(404)
     form = ShipTypeForm(obj=ship_type)
     print(form.__dict__)
     if form.validate_on_submit():
@@ -117,7 +117,7 @@ def ship_type_delete(rec_id: int = None):
         return redirect(url_for('login'))
     ship_type = ShipType.query.get(rec_id)
     if not ship_type:
-        return
+        abort(404)
     success, msg = delete_records(ship_type)
     flash(msg)
     return redirect(url_for('ship_type_view'))
@@ -152,7 +152,7 @@ def ship_status_update(rec_id: int = None):
         return redirect(url_for('login'))
     ship_status = ShipStatus.query.get(rec_id)
     if not ship_status:
-        return
+        abort(404)
     form = ShipStatusForm(obj=ship_status)
     print(form.__dict__)
     if form.validate_on_submit():
@@ -168,7 +168,7 @@ def ship_status_delete(rec_id: int = None):
         return redirect(url_for('login'))
     ship_status = ShipStatus.query.get(rec_id)
     if not ship_status:
-        return
+        abort(404)
     success, msg = delete_records(ship_status)
     flash(msg)
     return redirect(url_for('ship_status_view'))
@@ -202,7 +202,7 @@ def engine_update(rec_id: int = None):
         return redirect(url_for('login'))
     engine = Engine.query.get(rec_id)
     if not engine:
-        return
+        abort(404)
     form = EngineForm(obj=engine)
     if form.validate_on_submit():
         status, msg = update_records(engine, form)
@@ -217,7 +217,7 @@ def engine_delete(rec_id: int = None):
         return redirect(url_for('login'))
     engine = Engine.query.get(rec_id)
     if not engine:
-        return
+        abort(404)
     success, msg = delete_records(engine)
     flash(msg)
     return redirect(url_for('engine_view'))
@@ -251,7 +251,7 @@ def builder_update(rec_id: int = None):
         return redirect(url_for('login'))
     builder = Builder.query.get(rec_id)
     if not builder:
-        return
+        abort(404)
     form = BuilderForm(obj=builder)
     print(form.__dict__)
     if form.validate_on_submit():
@@ -267,7 +267,7 @@ def builder_delete(rec_id: int = None):
         return redirect(url_for('login'))
     builder = Builder.query.get(rec_id)
     if not builder:
-        return
+        abort(404)
     success, msg = delete_records(builder)
     flash(msg)
     return redirect(url_for('builder_view'))

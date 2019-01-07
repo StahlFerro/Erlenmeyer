@@ -30,11 +30,11 @@ def get_api_columns(model, include_type=False):
     return columns
 
 
-def positive_int(value):
-    intval = int(value)
-    if intval < 1:
-        raise TypeError(f"Id {value} is not a valid id! (should be greater than 0)")
-    return intval
+# def positive_int(value):
+#     intval = int(value)
+#     if intval < 1:
+#         raise TypeError(f"Id {value} is not a valid id! (should be greater than 0)")
+#     return intval
 
 
 # def get_type(text: str):
@@ -86,8 +86,9 @@ def get_json_data(model, columns, id=None, web_api=False) -> List[Dict[str, Any]
             data['index'] = index
         index += 1
         out_json.append(data)
-    pprint('all json')
-    pprint(out_json)
+    # pprint('all json')
+    # pprint(out_json)
+    out_json.sort(key=lambda i: i['id'])
     return out_json
 
 
@@ -112,5 +113,7 @@ def format_headers(headers):
             h = 'Type'
         elif h == 'Ship status':
             h = 'Status'
+        elif h == 'Speed':
+            h = 'Speed (kn)'
         new_headers.append(h)
     return new_headers

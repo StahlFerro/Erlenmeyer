@@ -56,7 +56,8 @@ def update_records(model, docs) -> (dict, int):
         if not is_valid:
             return errors, 400
     doc_ids = list(set(doc["id"] for doc in docs))  # Eliminates looping through multiple ids
-    all_ids = [record.id for record in model.query.all()]
+    all_ids = [i for i, in session.query(model.id).all()]
+    # all_ids = [record.id for record in model.query.all()]  2x slower
     non_existing_ids = list(set(doc_ids) - set(all_ids))
     print('docids, allids, nonexids', doc_ids, all_ids, non_existing_ids)
     if non_existing_ids:

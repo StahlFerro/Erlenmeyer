@@ -9,7 +9,7 @@ from server.models import User
 css = {"yes": "is-success", "no": "is-danger"}
 
 
-def view_records(model_class, rec_id:int = None, headers_override=None):
+def view_records(model_class, rec_id: int = None, headers_override=None):
     print('models called with id:', rec_id or 'none')
     headers = get_web_columns(model_class, headers_override=headers_override)
     data = get_json_data(model=model_class, columns=headers, id=rec_id)
