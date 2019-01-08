@@ -45,20 +45,6 @@ class ModelForm(BaseModelForm):
             #         print('-->', qlambda().all())
             #         setattr(self.__class__, col, QuerySelectField(query_factory=qlambda, allow_blank=True))
 
-    # class Meta:
-    #     def __init__(self):
-    #         model = self.model
-    #         print('--> self and model', self, model)
-    #         try:
-    #             unsigned_attrs = model.unsigned_attrs()
-    #         except Exception as e:
-    #             unsigned_attrs = None
-    #         if unsigned_attrs:
-    #             for uatrs in unsigned_attrs:
-    #                 setattr(self, uatrs, IntegerField(validators=[NumberRange(min=0)]))
-    #                 print('--> margo', self.capacity)
-    #         print('--> meta init unsigned attrs\n', unsigned_attrs)
-
 
 class UserForm(ModelForm):
     class Meta:
