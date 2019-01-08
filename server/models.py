@@ -128,9 +128,8 @@ class Ship(db.Model):
 
     @classmethod
     def unsigned_attrs(cls):
-        """
-        List of column names that are unsigned integers. A workaround for PostgreSQL's lack of support for UInts
-        """
+        """ List of column names that are unsigned integers. Will be used for the API side validation as a workaround
+            for PostgreSQL's lack of support for UInts """
         return ['capacity']
 
 

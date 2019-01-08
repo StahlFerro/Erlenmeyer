@@ -36,8 +36,8 @@ def get_schema(model, operation) -> Dict[str, Dict[str, Any]]:
         ftype = col.type.__visit_name__
         try:
             unsigned_attrs = model.unsigned_attrs()
-        except Exception as e:
-            unsigned_attrs = list()
+        except AttributeError:
+            unsigned_attrs = None
 
         if field == 'id' and operation == 'create':
             continue

@@ -1,7 +1,7 @@
-from flask_wtf import FlaskForm, Form
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, validators
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, IntegerField, validators
 from wtforms.validators import DataRequired
-from wtforms_alchemy import model_form_factory, ModelFormField, QuerySelectField, QuerySelectMultipleField
+from wtforms_alchemy import model_form_factory, QuerySelectField, NumberRange
 
 from server import db
 from server.models import Ship, Engine, Builder, ShipType, ShipStatus, User
@@ -13,6 +13,35 @@ class ModelForm(BaseModelForm):
     @classmethod
     def get_session(self):
         return db.session
+
+    def __init__(self):
+        """ This is an override to replace integer fields with unsigned ones specified in the model's
+            unsigned_attrs() method """
+        super(ModelForm, self).__init__()
+        model = self.Meta.model
+        try:
+            unsigned_attrs = model.unsigned_attrs()
+        except AttributeError:
+            unsigned_attrs = None
+        if unsigned_attrs:
+            for uatrs in unsigned_attrs:
+                """ 'self.__class__' here is the derived class (ex: ShipForm class) """
+                setattr(self.__class__, uatrs, IntegerField(validators=[NumberRange(min=0)]))
+
+
+    # class Meta:
+    #     def __init__(self):
+    #         model = self.model
+    #         print('--> self and model', self, model)
+    #         try:
+    #             unsigned_attrs = model.unsigned_attrs()
+    #         except Exception as e:
+    #             unsigned_attrs = None
+    #         if unsigned_attrs:
+    #             for uatrs in unsigned_attrs:
+    #                 setattr(self, uatrs, IntegerField(validators=[NumberRange(min=0)]))
+    #                 print('--> margo', self.capacity)
+    #         print('--> meta init unsigned attrs\n', unsigned_attrs)
 
 
 class UserForm(ModelForm):
