@@ -17,10 +17,10 @@ class ModelForm(BaseModelForm):
     def get_session(self):
         return db.session
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """ This is an override to replace integer fields with unsigned ones specified in the model's
             unsigned_attrs() method """
-        super(ModelForm, self).__init__()
+        super(ModelForm, self).__init__(*args, **kwargs)
         # print('--->', self.Meta.model)
         if self.Meta.model:
             model = self.Meta.model
