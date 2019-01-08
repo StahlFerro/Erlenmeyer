@@ -2,6 +2,7 @@ import json
 from pprint import pprint
 from datetime import date, datetime
 from typing import List, Dict, Any
+from collections import OrderedDict
 
 from flask_sqlalchemy import inspect, orm, DefaultMeta
 
@@ -27,6 +28,13 @@ def get_api_columns(model, include_type=False):
         columns = [col.key for col in mapper.columns if col.key not in exceptions]
     print('Obtained api columns')
     pprint(columns)
+    return columns
+
+
+def get_m2o_columns(model):
+    """ Gets a dictionary where the keys are the relationship name and the values are the model classes"""
+    mapper = inspect(model)
+    columns = {col.key: col.argument.class_ for col in mapper.relationships if col.direction.name == 'MANYTOONE'}
     return columns
 
 

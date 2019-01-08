@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, IntegerField, validators
 from wtforms.validators import DataRequired
@@ -5,6 +7,7 @@ from wtforms_alchemy import model_form_factory, QuerySelectField, NumberRange
 
 from server import db
 from server.models import Ship, Engine, Builder, ShipType, ShipStatus, User
+from server.utils.orm import get_m2o_columns
 
 BaseModelForm = model_form_factory(FlaskForm)
 
@@ -18,16 +21,29 @@ class ModelForm(BaseModelForm):
         """ This is an override to replace integer fields with unsigned ones specified in the model's
             unsigned_attrs() method """
         super(ModelForm, self).__init__()
-        model = self.Meta.model
-        try:
-            unsigned_attrs = model.unsigned_attrs()
-        except AttributeError:
-            unsigned_attrs = None
-        if unsigned_attrs:
-            for uatrs in unsigned_attrs:
-                """ 'self.__class__' here is the derived class (ex: ShipForm class) """
-                setattr(self.__class__, uatrs, IntegerField(validators=[NumberRange(min=0)]))
+        # print('--->', self.Meta.model)
+        if self.Meta.model:
+            model = self.Meta.model
+            m2o_rels = get_m2o_columns(model)
+            # print('--> model', model)
+            # print('--> model')
+            # pprint(m2o_rels)
+            try:
+                unsigned_attrs = model.unsigned_attrs()
+            except AttributeError:
+                unsigned_attrs = None
+            if unsigned_attrs:
+                for uatrs in unsigned_attrs:
+                    """ 'self.__class__' here is the derived class (ex: ShipForm class) """
+                    setattr(self.__class__, uatrs, IntegerField(validators=[NumberRange(min=0)]))
+                    # print('getattr', getattr(self.__class__, uatrs))
 
+            # if m2o_rels:
+            #     for col, modelclass in m2o_rels.items():
+            #         print('--->', col)
+            #         qlambda = lambda: modelclass.query
+            #         print('-->', qlambda().all())
+            #         setattr(self.__class__, col, QuerySelectField(query_factory=qlambda, allow_blank=True))
 
     # class Meta:
     #     def __init__(self):
