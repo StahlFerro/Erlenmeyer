@@ -24,7 +24,7 @@ class ModelForm(BaseModelForm):
         # print('--->', self.Meta.model)
         if self.Meta.model:
             model = self.Meta.model
-            m2o_rels = get_m2o_columns(model)
+            # m2o_rels = get_m2o_columns(model)
             # print('--> model', model)
             # print('--> model')
             # pprint(m2o_rels)
