@@ -59,6 +59,7 @@ curl -i http://localhost:5000/api/ships -X GET
 * [PostgreSQL](https://www.postgresql.org/) : Database
 * [Jinja2](http://jinja.pocoo.org/docs/2.10/) : Web templating engine (packaged together with Flask)
 * [Cerberus](http://docs.python-cerberus.org/en/stable/index.html) : Request validation
+* [Bulma](https://bulma.io/) : CSS
 
 ## License
 
