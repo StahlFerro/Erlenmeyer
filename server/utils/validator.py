@@ -28,16 +28,16 @@ from flask_sqlalchemy import inspect, orm
 
 
 def get_schema(model, operation) -> Dict[str, Dict[str, Any]]:
-    """ Creates a cerberus schema for view, create and update operations """
+    """ Creates a cerberus schema for API-level view, create and update operations """
     mapper: orm.mapper = inspect(model)
     schema = OrderedDict()
+    try:
+        unsigned_attrs = model.unsigned_attrs()
+    except AttributeError:
+        unsigned_attrs = None
     for col in mapper.columns:
         field = col.key
         ftype = col.type.__visit_name__
-        try:
-            unsigned_attrs = model.unsigned_attrs()
-        except AttributeError:
-            unsigned_attrs = None
 
         if field == 'id' and operation == 'create':
             continue
