@@ -45,6 +45,7 @@ class User(UserMixin, db.Model):
         return token
 
     def generate_refresh_token(self) -> str:
+        """ UNUSED """
         return create_refresh_token(self.client_secret, expires_delta=timedelta(days=120))
 
     def check_token_hash(self, token: str) -> bool:
