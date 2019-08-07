@@ -118,3 +118,8 @@ dmypy.json
 
 ### Custom added ignore for .idea/ directory
 .idea/
+
+
+### Visual Studio Code workspace ignore
+*.code-workspace
+.vscode/
