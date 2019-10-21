@@ -121,5 +121,4 @@ dmypy.json
 
 
 ### Visual Studio Code workspace ignore
-*.code-workspace
 .vscode/*

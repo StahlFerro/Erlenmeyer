@@ -66,7 +66,7 @@ def get_json_data(model, columns, id=None, web_api=False) -> List[Dict[str, Any]
     out_json = []
     index = 1
     for record in records:
-        cols = [f for f in dir(record) if f in columns]
+        cols = (f for f in dir(record) if f in columns)
         data = {}
         for col in cols:
             # print(cols)
